@@ -8,6 +8,12 @@ body {
     padding: 0;
 }
 
+
+
+/*
+    Access screen 
+*/
+
 .access {
     position: absolute;
     top: 0;
@@ -28,6 +34,7 @@ body {
     color: #a00;
     font-size: 60px;
     font-weight: 700;
+    text-align: center;
 }
 
 .access-input {
@@ -52,6 +59,16 @@ body {
 
 }
 
+.checking {
+    animation: checking 1s linear 1s infinite;
+}
+
+
+
+/*
+    Favorite
+*/
+
 #favorite {
     display: flex;
     flex-direction: column;
@@ -63,6 +80,12 @@ body {
     padding: 0;
     list-style: none;
 }
+
+
+
+/*
+    User card
+*/
 
 .user {
     display: flex;
@@ -108,6 +131,12 @@ body {
 
     cursor: default;
 }
+
+
+
+/*
+    Buttons in user card
+*/
 
 .buttons {
     display: flex;
@@ -209,6 +238,12 @@ body {
     }
 }
 
+
+
+/* 
+    Gallery 
+*/
+
 .gallery-block {
     position: absolute;
     top: 0px;
@@ -243,6 +278,51 @@ body {
 
     z-index: 99;
 }
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 100vw;
+    height: 100vw;
+}
+
+#prev,
+#next {
+    width: 100%;
+
+    color: #555;
+    font-size: 36px;
+    font-weight: 400;
+
+    background-color: #000;
+    border: 0;
+
+    padding: 30px;
+
+    cursor: pointer;
+}
+
+#prev {
+    text-align: left;
+}
+
+#next {
+    text-align: right;
+}
+
+#photo {
+    height: 100vh;
+
+    cursor: zoom-out;
+}
+
+
+
+/*
+    All photos in gallery
+*/
 
 #all-photos {
     position: fixed;
@@ -299,44 +379,11 @@ body {
     z-index: 99;
 }
 
-.gallery {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
-    width: 100vw;
-    height: 100vw;
-}
 
-#prev,
-#next {
-    width: 100%;
-
-    color: #555;
-    font-size: 36px;
-    font-weight: 400;
-
-    background-color: #000;
-    border: 0;
-
-    padding: 30px;
-
-    cursor: pointer;
-}
-
-#prev {
-    text-align: left;
-}
-
-#next {
-    text-align: right;
-}
-
-#photo {
-    height: 100vh;
-
-    cursor: zoom-out;
-}
+/*
+    Open database
+*/
 
 #open-database {
     position: fixed;
@@ -363,9 +410,11 @@ body {
     }
 }
 
-.checking {
-    animation: checking 1s linear 1s infinite;
-}
+
+
+/*
+    Animations
+*/
 
 @keyframes checking {
     0% {
