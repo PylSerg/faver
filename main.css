@@ -57,6 +57,11 @@ body {
     outline: none;
     caret-color: transparent;
 
+    &::placeholder {
+        font-size: 24px;
+        font-style: italic;
+        font-weight: 400;
+    }
 }
 
 .checking {
