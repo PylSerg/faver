@@ -96,6 +96,15 @@ function createCards() {
 						<span class="user-name" title=${description}>${data.NAME}</span>
 					</div>
 
+					<div class="buttons-profiles-block">
+							<button class="button-profiles" type="button" onClick="profiles({fbp: ${fbpId}, inst: ${instId}})">Profile</button>
+							
+							<div class="buttons-profiles-individually">
+								<button class="button-open-instagram" type="button" onClick="Instagram_Profile(${instId})">Instagram</button>
+								<button class="button-open-facebook" type="button" onClick="Facebook_Profile(${fbpId})">Facebook</button>
+							</div>
+						</div>
+
 					<div class="buttons">
 						<div class="buttons-stories-block">
 							<button class="button-stories" type="button" onClick="stories({fbs: ${fbsId}, inst: ${instId}})">Stories</button>
@@ -103,15 +112,6 @@ function createCards() {
 							<div class="buttons-stories-individually">
 								<button class="button-open-instagram" type="button" onClick="Instagram_Stories(${instId})">Instagram</button>
 								<button class="button-open-facebook" type="button" onClick="Facebook_Stories(${fbsId})">Facebook</button>
-							</div>
-						</div>
-
-						<div class="buttons-profiles-block">
-							<button class="button-profiles" type="button" onClick="profiles({fbp: ${fbpId}, inst: ${instId}})">Profile</button>
-							
-							<div class="buttons-profiles-individually">
-								<button class="button-open-instagram" type="button" onClick="Instagram_Profile(${instId})">Instagram</button>
-								<button class="button-open-facebook" type="button" onClick="Facebook_Profile(${fbpId})">Facebook</button>
 							</div>
 						</div>
 
