@@ -10,7 +10,6 @@ const refGallery = document.querySelector(".gallery-block");
 const refPhoto = document.querySelector("#photo");
 const refPrev = document.querySelector("#prev");
 const refNext = document.querySelector("#next");
-const refGalleryBottomLine = document.querySelector("#gallery-bottom-line");
 
 const refAllPhotos = document.querySelector("#all-photos");
 const refToggleAllPhotos = document.querySelector(".toggle-all-photos");
@@ -63,11 +62,13 @@ async function getUsers(pass) {
 
 function openAccess() {
 	setTimeout(() => {
-		refAccess.style.display = "none";
+		refAccess.remove();
+
 		refOpenDatabase.style.display = "block";
 	}, 1000);
 
-	refAccessInput.style.display = "none";
+	refAccessInput.remove();
+
 	refAccessText.innerHTML = "ACCESS ALLOWED";
 	refAccessText.style.color = "#0a0";
 
@@ -91,7 +92,7 @@ function createCards() {
 
 		userCard.innerHTML = `
 					<div class="user-title">
-						<div class="user-avatar" style="background-image: url(${avatar}); background-size: cover; background-position: center;" onClick="openGallery(${user})"></div>
+						<div class="user-avatar" style="background-image: url(${avatar})" onClick="openGallery(${user})"></div>
 						
 						<span class="user-name" title=${description}>${data.NAME}</span>
 					</div>
@@ -174,7 +175,6 @@ function openGallery(user) {
 
 function closeGallery() {
 	refGallery.style.display = "none";
-
 	refAllPhotos.style.display = "none";
 
 	activeUser = "";

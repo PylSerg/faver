@@ -5,7 +5,8 @@ body {
     font-family: Arial;
 
     margin: 0;
-    padding: 0;
+    padding: 10px;
+    padding-bottom: 50px;
 }
 
 
@@ -104,7 +105,11 @@ body {
 
     background-color: #2a2a2a;
 
-    padding: 30px 50px 30px 50px;
+    padding: 30px 50px;
+
+    @media screen and (max-width: 400px) {
+        padding: 30px;
+    }
 }
 
 .user-title {
@@ -113,6 +118,10 @@ body {
     align-items: center;
 
     cursor: default;
+
+    @media screen and (max-width: 400px) {
+        margin-bottom: 30px;
+    }
 }
 
 .user-avatar {
@@ -120,6 +129,8 @@ body {
     height: 86px;
 
     border-radius: 100%;
+    background-size: cover;
+    background-position: center;
 
     cursor: pointer;
 }
@@ -135,6 +146,10 @@ body {
     margin-left: 30px;
 
     cursor: default;
+
+    @media screen and (max-width: 400px) {
+        max-width: 180px;
+    }
 }
 
 
@@ -250,12 +265,13 @@ body {
 */
 
 .gallery-block {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
 
     display: none;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     width: 100vw;
     height: 100vh;
@@ -276,7 +292,6 @@ body {
     font-size: 16px;
     font-weight: 700;
 
-    background-color: #000;
     border: 0;
 
     cursor: pointer;
@@ -284,36 +299,44 @@ body {
     z-index: 99;
 }
 
-.gallery {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    width: 100vw;
-    height: 100vw;
-}
-
 #prev,
 #next {
-    width: 100%;
+    position: fixed;
+    top: 0;
+
+    height: 100vh;
 
     color: #555;
     font-size: 36px;
     font-weight: 400;
 
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.5);
     border: 0;
 
     padding: 30px;
 
     cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 0;
+
+        width: 50%;
+        height: auto;
+
+        padding: 10px 30px;
+    }
 }
 
 #prev {
+    left: 0;
+
     text-align: left;
 }
 
 #next {
+    right: 0;
+
     text-align: right;
 }
 
@@ -321,6 +344,11 @@ body {
     height: 100vh;
 
     cursor: zoom-out;
+
+    @media screen and (max-width: 400px) {
+        width: 100vw;
+        height: max-content;
+    }
 }
 
 
@@ -347,6 +375,12 @@ body {
     background-color: #000;
 
     overflow: scroll;
+
+    @media screen and (max-width: 400px) {
+        justify-content: center;
+
+        padding: 20px auto;
+    }
 }
 
 .photo-review-box {

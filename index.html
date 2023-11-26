@@ -27,19 +27,17 @@
     <!-- Gallery -->
 
     <div class="gallery-block">
-        <img class="close-gallery-button" src="close.png" onClick="closeGallery()" />
+
+        <img id="photo" src="" onClick="toggleAllPhotos()">
+
+        <button id="prev" type="button" onClick="changePhoto('prev')">&#8249;</button>
+        <button id="next" type="button" onClick="changePhoto('next')">&#8250;</button>
 
         <div id="all-photos"></div>
 
-        <img class="toggle-all-photos" src="photo.png" onclick="toggleAllPhotos()">
+        <img class="close-gallery-button" src="close.png" onClick="closeGallery()" />
 
-        <div class="gallery">
-            <button id="prev" type="button" onClick="changePhoto('prev')">&#8249;</button>
-
-            <img id="photo" src="" onClick="toggleAllPhotos()">
-
-            <button id="next" type="button" onClick="changePhoto('next')">&#8250;</button>
-        </div>
+        <img class="toggle-all-photos" src="photo.png" onclick="toggleAllPhotos()" />
     </div>
 
     <!-- End Gallery -->
