@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="main.css">
+    <title>Social Scanner</title>
+</head>
+
+<body>
+
+    <!-- Access screen -->
+
+    <div class="access">
+        <span class="access-text">ACCESS DENIED</span>
+
+        <input class="access-input" type="password" oninput="checkAccess(event.currentTarget.value)" autofocus />
+    </div>
+
+    <!-- End access screen -->
+
+    <ul id="favorite"></ul>
+
+    <!-- Gallery -->
+
+    <div class="gallery-block">
+        <img class="close-gallery-button" src="close.png" onClick="closeGallery()" />
+
+        <div id="all-photos"></div>
+
+        <img class="toggle-all-photos" src="photo.png" onclick="toggleAllPhotos()">
+
+        <div class="gallery">
+            <button id="prev" type="button" onClick="changePhoto('prev')">&#8249;</button>
+
+            <img id="photo" src="" onClick="toggleAllPhotos()">
+
+            <button id="next" type="button" onClick="changePhoto('next')">&#8250;</button>
+        </div>
+    </div>
+
+    <!-- End Gallery -->
+
+    <a id="open-database" target="_blank">Open Database</a>
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>
