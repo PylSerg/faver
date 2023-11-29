@@ -23,7 +23,7 @@ let showAllPhoto = null;
 let photoCounter = 0;
 
 function checkAccess(pass) {
-	if (pass.length === 4) {
+	if (pass.length >= 4) {
 		refAccessInput.setAttribute("class", "access-input checking");
 
 		getUsers(pass);
