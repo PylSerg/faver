@@ -1,12 +1,23 @@
+:root {
+    --main-color: #0086af;
+    --main-font-family: Saira;
+}
+
 body {
     background-color: #1c1c1c;
 
     color: #fff;
-    font-family: Arial;
+    font-family: var(--main-font-family);
+    letter-spacing: 2px;
 
     margin: 0;
     padding: 10px;
     padding-bottom: 50px;
+}
+
+button {
+    font-family: var(--main-font-family);
+    letter-spacing: 2px;
 }
 
 
@@ -32,20 +43,26 @@ body {
 }
 
 .access-text {
-    color: #a00;
+    color: var(--main-color);
     font-size: 60px;
     font-weight: 700;
     text-align: center;
+    letter-spacing: 20px;
+
+    padding: 30px 50px;
+
+    border: 5px solid var(--main-color);
+    border-radius: 5px;
 }
 
 .access-input {
     position: absolute;
     bottom: 30px;
 
-    width: 100px;
+    width: 90vw;
     height: 50px;
 
-    color: #a00;
+    color: var(--main-color);
     font-size: 40px;
     font-weight: 700;
     text-align: center;
@@ -67,6 +84,10 @@ body {
 
 .checking {
     animation: checking 1s linear 1s infinite;
+}
+
+.access-text--error {
+    animation: error 1000ms linear;
 }
 
 
@@ -470,5 +491,37 @@ body {
 
     100% {
         font-size: 40px;
+    }
+}
+
+@keyframes error {
+    0% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    20% {
+        color: #a00;
+        border-color: #a00;
+    }
+
+    40% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    60% {
+        color: #a00;
+        border-color: #a00;
+    }
+
+    80% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    100% {
+        color: #a00;
+        border-color: #a00;
     }
 }
