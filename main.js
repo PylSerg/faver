@@ -37,27 +37,27 @@ async function getUsers(pass) {
 		})
 		.then((data) => {
 			if (data.status === 200) {
-				data.data.map((user) => {
-					for (const userId in user) {
-						favorite[userId] = {};
-
-						for (const key in user[userId]) {
-							favorite[userId][key] = user[userId][key];
-						}
-					}
-				});
-
-				refOpenDatabase.setAttribute("href", data.database);
-
-				openAccess();
-
-				console.log(`\x1b[32m Access allowed`);
+				initialization(data);
 			} else {
-				refAccessInput.setAttribute("class", "access-input");
-
-				console.log(`\x1b[31m Access denied`);
+				closeAccess();
 			}
 		});
+}
+
+function initialization(data) {
+	data.data.map((user) => {
+		for (const userId in user) {
+			favorite[userId] = {};
+
+			for (const key in user[userId]) {
+				favorite[userId][key] = user[userId][key];
+			}
+		}
+	});
+
+	refOpenDatabase.setAttribute("href", data.database);
+
+	openAccess();
 }
 
 function openAccess() {
@@ -71,8 +71,23 @@ function openAccess() {
 
 	refAccessText.innerHTML = "ACCESS ALLOWED";
 	refAccessText.style.color = "#0a0";
+	refAccessText.style.borderColor = "#0a0";
 
 	createCards();
+}
+
+function closeAccess() {
+	refAccessText.innerHTML = "ACCESS DENIED";
+	refAccessText.style.color = "#a00";
+	refAccessText.style.borderColor = "#a00";
+	refAccessText.setAttribute("class", "access-text access-text--error");
+
+	refAccessInput.setAttribute("class", "access-input");
+	refAccessInput.value = "";
+
+	setTimeout(() => {
+		refAccessText.setAttribute("class", "access-text");
+	}, 1100);
 }
 
 function createCards() {
