@@ -1,12 +1,17 @@
 :root {
-    --main-color: #0086af;
+    --main-background-color: #111;
+
+    --main-color: #8b4104;
     --main-font-family: Saira;
+
+    --border: 3px solid var(--main-color);
+    --border-radius: 10px;
 }
 
 body {
-    background-color: #1c1c1c;
+    background-color: var(--main-background-color);
 
-    color: #fff;
+    color: var(--main-color);
     font-family: var(--main-font-family);
     letter-spacing: 2px;
 
@@ -16,8 +21,19 @@ body {
 }
 
 button {
+    color: var(--main-color);
     font-family: var(--main-font-family);
     letter-spacing: 2px;
+
+    background-color: var(--main-background-color);
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    &:hover,
+    &:focus {
+        color: #ccc;
+        background-color: var(--main-color);
+    }
 }
 
 
@@ -39,7 +55,7 @@ button {
     width: 100vw;
     height: 100vh;
 
-    background-color: #111;
+    background-color: var(--main-background-color);
 }
 
 .access-text {
@@ -53,9 +69,9 @@ button {
 
     padding: 30px 50px;
 
-    background-color: #111;
+    background-color: var(--main-background-color);
     border: 5px solid var(--main-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
 }
 
 .access-input {
@@ -70,8 +86,8 @@ button {
     font-weight: 400;
     text-align: center;
 
-    background-color: #111;
-    border-radius: 25px;
+    background-color: var(--main-background-color);
+    border-radius: var(--border-radius);
     border: 0;
 
     cursor: default;
@@ -124,10 +140,8 @@ button {
     justify-content: space-between;
     align-items: center;
 
-    border: 1px solid #808080;
-    border-radius: 25px;
-
-    background-color: #2a2a2a;
+    border: var(--border);
+    border-radius: var(--border-radius);
 
     padding: 30px 50px;
 
@@ -152,7 +166,8 @@ button {
     width: 86px;
     height: 86px;
 
-    border-radius: 100%;
+    border: var(--border);
+    border-radius: var(--border-radius);
     background-size: cover;
     background-position: center;
 
@@ -211,14 +226,8 @@ button {
         width: 120px;
         height: 38px;
 
-        color: #fff;
         font-size: 16px;
         font-weight: 400;
-
-        background-color: #3f3f3f;
-
-        border-radius: 10px;
-        border: 0;
 
         cursor: pointer;
     }
@@ -230,56 +239,10 @@ button {
     width: 150px;
     height: 86px;
 
-    color: #fff;
     font-size: 20px;
     font-weight: 700;
 
-    background-color: #3f3f3f;
-
-    border-radius: 15px;
-    border: 0;
-
     cursor: pointer;
-}
-
-.button-open-instagram {
-
-    &:hover,
-    &:focus {
-        background-color: #7f3f9f;
-    }
-}
-
-.button-open-facebook {
-
-    &:hover,
-    &:focus {
-        background-color: #2f2faf;
-    }
-}
-
-.button-stories {
-
-    &:hover,
-    &:focus {
-        background-color: #5f3f5f;
-    }
-}
-
-.button-profiles {
-
-    &:hover,
-    &:focus {
-        background-color: #3f3f6f;
-    }
-}
-
-.button-all {
-
-    &:hover,
-    &:focus {
-        background-color: #8f4f2f;
-    }
 }
 
 
@@ -396,7 +359,7 @@ button {
 
     padding: 20px 60px 100px 80px;
 
-    background-color: #000;
+    background-color: var(--main-background-color);
 
     overflow: scroll;
 
@@ -424,13 +387,14 @@ button {
     max-width: 100%;
     max-height: 100%;
 
-    border-radius: 10px;
+    border-radius: var(--border-radius);
 
     cursor: zoom-in;
 
     &:hover,
     &:focus {
-        border: 3px solid #f16805
+        border: var(--border);
+        border-width: 5px;
     }
 }
 
@@ -460,20 +424,22 @@ button {
 
     display: none;
 
-    color: #ccc;
+    color: var(--main-color);
     font-size: 20px;
     text-align: center;
     text-decoration: none;
 
-    background-color: rgba(30, 30, 30, 0.9);
-    border-radius: 15px 15px 0 0;
+    background-color: var(--main-background-color);
+    border: var(--border);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
 
     padding: 10px 20px;
 
     &:hover,
     &:focus {
         color: #fff;
-        background-color: #555;
+        background-color: var(--main-color);
     }
 }
 

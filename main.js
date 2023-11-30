@@ -117,7 +117,7 @@ function createCards() {
 
 					<div class="buttons">
 						<div class="buttons-profiles-block">
-							<button class="button-profiles" type="button" onClick="profiles({fbp: ${fbpId}, inst: ${instId}})">Profile</button>
+							<button class="button-profiles" type="button" onClick="profiles({fbp: ${fbpId}, inst: ${instId}})">Profiles</button>
 								
 							<div class="buttons-profiles-individually">
 								<button class="button-open-instagram" type="button" onClick="Instagram_Profile(${instId})">Instagram</button>
