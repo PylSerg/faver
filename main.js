@@ -22,15 +22,17 @@ let activeUser = "";
 let showAllPhoto = null;
 let photoCounter = 0;
 
-function checkAccess(pass) {
+function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
+		refAccessInput.value = "CHECKING ACCESS...";
+		refAccessInput.setAttribute("type", "text");
 		refAccessInput.setAttribute("class", "access-input checking");
 
-		getUsers(pass);
+		checkAccess(pass);
 	}
 }
 
-async function getUsers(pass) {
+async function checkAccess(pass) {
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
 			return resp.json();
@@ -82,6 +84,7 @@ function closeAccess() {
 	refAccessText.style.borderColor = "#a00";
 	refAccessText.setAttribute("class", "access-text access-text--error");
 
+	refAccessInput.setAttribute("type", "password");
 	refAccessInput.setAttribute("class", "access-input");
 	refAccessInput.value = "";
 
