@@ -195,17 +195,19 @@ function openGallery(user) {
 	photoCounter = 0;
 	showAllPhoto = true;
 
+	viewAllPhotos();
+
 	refGallery.style.display = "flex";
 	refAllPhotos.style.display = "flex";
 	refToggleAllPhotos.setAttribute("src", "photo.png");
-
-	viewAllPhotos();
 
 	for (const key in favorite) {
 		const data = favorite[key];
 
 		if (key === activeUser) {
 			refPhoto.setAttribute("src", data.PHOTOS[photoCounter]);
+
+			break;
 		}
 	}
 }
