@@ -291,7 +291,7 @@ button {
     position: fixed;
     top: 0;
 
-    height: 100vh;
+    height: 95vh;
 
     color: #555;
     font-size: 36px;
@@ -355,7 +355,7 @@ button {
     gap: 30px;
 
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     padding: 20px 60px 100px 80px;
 
@@ -424,6 +424,8 @@ button {
     display: none;
 
     width: 100vw;
+
+    z-index: 999;
 
     & span {
         position: absolute;

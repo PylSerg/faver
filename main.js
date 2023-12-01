@@ -197,6 +197,7 @@ function openGallery(user) {
 
 	viewAllPhotos();
 
+	refConsole.style.backgroundColor = "transparent";
 	refGallery.style.display = "flex";
 	refAllPhotos.style.display = "flex";
 	refToggleAllPhotos.setAttribute("src", "photo.png");
@@ -215,6 +216,7 @@ function openGallery(user) {
 function closeGallery() {
 	refGallery.style.display = "none";
 	refAllPhotos.style.display = "none";
+	refConsole.style.backgroundColor = "#000";
 
 	activeUser = "";
 }
