@@ -21,7 +21,7 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
-let GUI = true;
+let GUI = false;
 
 let activeUser = "";
 let defaultUser = "USER_1";
@@ -101,7 +101,12 @@ function openAccess() {
 	refAccessText.style.color = "#0a0";
 	refAccessText.style.borderColor = "#0a0";
 
-	command = "gui off";
+	if (GUI) {
+		command = "gui on";
+	} else {
+		command = "gui off";
+	}
+
 	consoleCommands();
 }
 
