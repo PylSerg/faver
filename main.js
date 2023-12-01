@@ -1,4 +1,4 @@
-const SERVER = "https://script.google.com/macros/s/AKfycbzaRdbc06QSFZlU5Vfp7sxwh70CgRJtv5tyLqfMRwV29aZimZ1S46jirhsUafVsmJJZpQ/exec";
+const SERVER = "https://script.google.com/macros/s/AKfycbywPWqsIIIRrXgy3vo1VtW8OHqOjGNtX1FSUQcpq8tGKXdvy6AaApZbArvcCV8Lw2hkNg/exec";
 let DB = "";
 
 const refAccess = document.querySelector(".access");
@@ -24,7 +24,10 @@ let activeUser = "";
 let showAllPhoto = null;
 let photoCounter = 0;
 
-let command = "";
+let currentUser = "guest";
+let command = "start";
+
+customConsole("Starting Faver...");
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -37,14 +40,21 @@ function autoSendingPassword(pass) {
 }
 
 async function checkAccess(pass) {
+	command = "check access";
+
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
 			return resp.json();
 		})
 		.then((data) => {
 			if (data.status === 200) {
+				currentUser = data.user;
+				customConsole(`\x1b[01;32mAccess allowed`);
+
 				initialization(data);
 			} else {
+				customConsole(`\x1b[01;31mAccess denied`);
+
 				closeAccess();
 			}
 		});
@@ -289,12 +299,73 @@ function sendConsoleCommand(e) {
 }
 
 function consoleCommands() {
-	switch (command) {
-		case "db":
+	let commandArguments = [];
+
+	commandArguments = command.split(" ");
+
+	const user = favorite[`USER_${commandArguments[1]}`];
+
+	switch (commandArguments[0]) {
+		case "odb":
 			window.open(DB, "_blank");
+
+			customConsole(`Opening database...`);
+
+			break;
+
+		case "oap":
+			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
+
+			customConsole(`Opening all profiles of ${user.NAME}...`);
+
+			break;
+
+		case "ofp":
+			Facebook_Profile(user.FB_PROF_ID);
+
+			customConsole(`Opening Facebook profile of ${user.NAME}...`);
+
+			break;
+
+		case "oip":
+			Instagram_Profile(user.INST_ID);
+
+			customConsole(`Opening Instagram profile of ${user.NAME}...`);
+
+			break;
+
+		case "oas":
+			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
+
+			customConsole(`Opening all stories of ${user.NAME}...`);
+
+			break;
+
+		case "ofs":
+			Facebook_Stories(user.FB_STOR_ID);
+
+			customConsole(`Opening Facebook stories of ${user.NAME}...`);
+
+			break;
+
+		case "ois":
+			Instagram_Stories(user.INST_ID);
+
+			customConsole(`Opening Instagram stories of ${user.NAME}...`);
+
+			break;
+
+		default:
+			customConsole(`\x1b[31mError: Command not found`);
 	}
 
 	refConsole.value = "";
+}
+
+function customConsole(info) {
+	const date = new Date();
+
+	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${date}\n\n${info}\n\n`);
 }
 
 refConsole.addEventListener("keydown", sendConsoleCommand);
