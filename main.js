@@ -355,6 +355,13 @@ function consoleCommands() {
 
 			break;
 
+		case "oa":
+			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
+
+			customConsole(`Opening all pages of ${user.NAME}...`);
+
+			break;
+
 		default:
 			customConsole(`\x1b[31mError: Command not found`);
 	}
