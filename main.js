@@ -1,5 +1,5 @@
 const SERVER = "https://script.google.com/macros/s/AKfycbywPWqsIIIRrXgy3vo1VtW8OHqOjGNtX1FSUQcpq8tGKXdvy6AaApZbArvcCV8Lw2hkNg/exec";
-let DB = "";
+let DATABASE = "";
 
 const refAccess = document.querySelector(".access");
 const refAccessText = document.querySelector(".access-text");
@@ -72,7 +72,7 @@ function initialization(data) {
 		}
 	});
 
-	DB = data.database;
+	DATABASE = data.database;
 
 	openAccess();
 }
@@ -310,7 +310,7 @@ function consoleCommands() {
 		case "odb":
 			customConsole(`Opening database...`);
 
-			window.open(DB, "_blank");
+			window.open(DATABASE, "_blank");
 
 			break;
 
