@@ -446,6 +446,8 @@ button {
     left: 0;
     bottom: 30px;
 
+    visibility: hidden;
+
     width: 100vw;
 
 

@@ -21,6 +21,8 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
+let GUI = true;
+
 let activeUser = "";
 let defaultUser = "USER_1";
 
@@ -29,6 +31,7 @@ let photoCounter = 0;
 
 let currentUser = "guest";
 let command = "start";
+let logger = false;
 
 customLog("Starting Faver...");
 
@@ -98,7 +101,8 @@ function openAccess() {
 	refAccessText.style.color = "#0a0";
 	refAccessText.style.borderColor = "#0a0";
 
-	createCards();
+	command = "gui off";
+	consoleCommands();
 }
 
 function closeAccess() {
@@ -117,6 +121,8 @@ function closeAccess() {
 }
 
 function createCards() {
+	refFavorite.innerHTML = "";
+
 	for (const key in favorite) {
 		const data = favorite[key];
 		const user = `'${key}'`;
@@ -160,6 +166,22 @@ function createCards() {
 						<button class="button-all" type="button" onClick="openAll({fbp: ${fbpId}, fbs: ${fbsId}, inst: ${instId}})">Open All</button>
 					</div>
 				`;
+	}
+}
+
+function createCardsWithoutGUI() {
+	refFavorite.innerHTML = "";
+
+	for (const key in favorite) {
+		const data = favorite[key];
+		const user = `${key}`;
+
+		const userCard = document.createElement("li");
+		refFavorite.append(userCard);
+
+		userCard.innerHTML = `
+			${user}: ${data.NAME}
+		`;
 	}
 }
 
@@ -223,7 +245,7 @@ function closeGallery() {
 	refAllPhotos.style.display = "none";
 	refConsole.style.backgroundColor = "#000";
 
-	showLog();
+	if (!GUI) showLog();
 
 	activeUser = "";
 }
@@ -459,15 +481,35 @@ function consoleCommands() {
 
 		/* Service commands */
 
-		// Hides log
-		case "hl":
-			hideLog();
+		// Off\On GUI
+		case "gui":
+			if (commandArguments[1] === "off") {
+				GUI = false;
+
+				createCardsWithoutGUI();
+				showLog();
+
+				customLog(`GUI is off`);
+			}
+
+			if (commandArguments[1] === "on") {
+				GUI = true;
+
+				createCards();
+				hideLog();
+
+				customLog(`GUI is on`);
+			}
 
 			break;
 
-		// Shows log
-		case "sl":
-			showLog();
+		// Hides\shows log
+		case "l":
+			if (!logger) {
+				showLog();
+			} else {
+				hideLog();
+			}
 
 			break;
 
@@ -492,10 +534,14 @@ function consoleCommands() {
 
 function hideLog() {
 	refConsoleLog.style.visibility = "hidden";
+
+	logger = false;
 }
 
 function showLog() {
-	refConsoleLog.style.visibility = "";
+	refConsoleLog.style.visibility = "visible";
+
+	logger = true;
 }
 
 function customLog(info) {
@@ -505,7 +551,7 @@ function customLog(info) {
 
 	if (info.includes("allowed")) logColor = "style='color: #282'";
 
-	let log = `
+	let logInfo = `
 		<span ${logColor}>${info}</span>
 	`;
 
@@ -514,7 +560,7 @@ function customLog(info) {
 	newLog.innerHTML = `
 		<b style="color: #358">${currentUser}@faver</b>:~$ <b style="color: #883">${command}</b>
 		<br/>
-		${log}
+		${logInfo}
 		<br/><br/>
 	`;
 
