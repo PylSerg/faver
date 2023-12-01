@@ -21,6 +21,8 @@ const refConsole = document.querySelector("#console");
 const favorite = {};
 
 let activeUser = "";
+let defaultUser = "USER_1";
+
 let showAllPhoto = null;
 let photoCounter = 0;
 
@@ -309,8 +311,10 @@ function consoleCommands() {
 	commandArguments = command.split(" ");
 
 	const user = favorite[`USER_${commandArguments[1]}`];
+	const dUser = favorite[`${defaultUser}`];
 
 	switch (commandArguments[0]) {
+		/* Open Database */
 		case "odb":
 			customConsole(`Opening database...`);
 
@@ -318,6 +322,7 @@ function consoleCommands() {
 
 			break;
 
+		/* Open all profiles */
 		case "oap":
 			customConsole(`Opening all profiles of ${user.NAME}...`);
 
@@ -325,6 +330,15 @@ function consoleCommands() {
 
 			break;
 
+		/* Open all stories */
+		case "oas":
+			customConsole(`Opening all stories of ${user.NAME}...`);
+
+			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
+
+			break;
+
+		/* Open profile */
 		case "ofp":
 			customConsole(`Opening Facebook profile of ${user.NAME}...`);
 
@@ -339,13 +353,7 @@ function consoleCommands() {
 
 			break;
 
-		case "oas":
-			customConsole(`Opening all stories of ${user.NAME}...`);
-
-			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
-
-			break;
-
+		/* Open stories */
 		case "ofs":
 			customConsole(`Opening Facebook stories of ${user.NAME}...`);
 
@@ -360,10 +368,92 @@ function consoleCommands() {
 
 			break;
 
+		/* Open all */
 		case "oa":
 			customConsole(`Opening all pages of ${user.NAME}...`);
 
 			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
+
+			break;
+
+		/* Open gallery */
+		case "og":
+			customConsole(`Opening gallery of ${user.NAME}...`);
+
+			openGallery(`USER_${commandArguments[1]}`);
+
+			break;
+
+		/* Close gallery */
+		case "cg":
+			customConsole(`Closing gallery...`);
+
+			closeGallery();
+
+			break;
+
+		/* Commands for default user */
+		case "dap":
+			customConsole(`Opening all profiles of ${dUser.NAME}...`);
+
+			profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
+
+			break;
+
+		case "das":
+			customConsole(`Opening all stories of ${dUser.NAME}...`);
+
+			stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+
+			break;
+
+		case "dfp":
+			customConsole(`Opening Facebook profile of ${dUser.NAME}...`);
+
+			Facebook_Profile(dUser.FB_PROF_ID);
+
+			break;
+
+		case "dip":
+			customConsole(`Opening Instagram profile of ${dUser.NAME}...`);
+
+			Instagram_Profile(dUser.INST_ID);
+
+			break;
+
+		case "dfs":
+			customConsole(`Opening Facebook stories of ${dUser.NAME}...`);
+
+			Facebook_Stories(dUser.FB_STOR_ID);
+
+			break;
+
+		case "dis":
+			customConsole(`Opening Instagram stories of ${dUser.NAME}...`);
+
+			Instagram_Stories(dUser.INST_ID);
+
+			break;
+
+		case "da":
+			customConsole(`Opening all pages of ${dUser.NAME}...`);
+
+			openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+
+			break;
+
+		case "g":
+			customConsole(`Opening gallery of ${dUser.NAME}...`);
+
+			openGallery(defaultUser);
+
+			break;
+
+		/* Service commands */
+		case "/":
+			customConsole(`Exit`);
+
+			location.reload();
 
 			break;
 
