@@ -16,6 +16,7 @@ const refAllPhotos = document.querySelector("#all-photos");
 const refToggleAllPhotos = document.querySelector(".toggle-all-photos");
 
 const refConsoleBlock = document.querySelector(".console-block");
+const refConsoleLog = document.querySelector("#console-log");
 const refConsole = document.querySelector("#console");
 
 const favorite = {};
@@ -29,7 +30,7 @@ let photoCounter = 0;
 let currentUser = "guest";
 let command = "start";
 
-customConsole("Starting Faver...");
+customLog("Starting Faver...");
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -43,7 +44,7 @@ function autoSendingPassword(pass) {
 
 async function checkAccess(pass) {
 	command = "check access";
-	customConsole(`Checking access...`);
+	customLog(`Checking access...`);
 
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
@@ -52,11 +53,11 @@ async function checkAccess(pass) {
 		.then((data) => {
 			if (data.status === 200) {
 				currentUser = data.user;
-				customConsole(`\x1b[01;32mAccess allowed`);
+				customLog(`Access allowed`);
 
 				initialization(data);
 			} else {
-				customConsole(`\x1b[01;31mAccess denied`);
+				customLog(`Access denied`);
 
 				closeAccess();
 			}
@@ -84,6 +85,7 @@ function openAccess() {
 		refAccess.remove();
 
 		refConsoleBlock.style.display = "block";
+		refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
 		setInterval(() => {
 			refConsole.focus();
@@ -197,6 +199,7 @@ function openGallery(user) {
 	photoCounter = 0;
 	showAllPhoto = true;
 
+	hideLog();
 	viewAllPhotos();
 
 	refConsole.style.backgroundColor = "transparent";
@@ -219,6 +222,8 @@ function closeGallery() {
 	refGallery.style.display = "none";
 	refAllPhotos.style.display = "none";
 	refConsole.style.backgroundColor = "#000";
+
+	showLog();
 
 	activeUser = "";
 }
@@ -297,6 +302,9 @@ function selectPhoto(indx) {
 	toggleAllPhotos();
 }
 
+/* 
+	Console
+*/
 function getConsoleCommand(cmd) {
 	command = cmd;
 }
@@ -314,79 +322,79 @@ function consoleCommands() {
 	const dUser = favorite[`${defaultUser}`];
 
 	switch (commandArguments[0]) {
-		/* Open Database */
+		/* Opens Database */
 		case "odb":
-			customConsole(`Opening database...`);
+			customLog(`Opening database...`);
 
 			window.open(DATABASE, "_blank");
 
 			break;
 
-		/* Open all profiles */
+		/* Opens all profiles */
 		case "oap":
-			customConsole(`Opening all profiles of ${user.NAME}...`);
+			customLog(`Opening all profiles of ${user.NAME}...`);
 
 			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
 
 			break;
 
-		/* Open all stories */
+		/* Opens all stories */
 		case "oas":
-			customConsole(`Opening all stories of ${user.NAME}...`);
+			customLog(`Opening all stories of ${user.NAME}...`);
 
 			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
-		/* Open profile */
+		/* Opens profile */
 		case "ofp":
-			customConsole(`Opening Facebook profile of ${user.NAME}...`);
+			customLog(`Opening Facebook profile of ${user.NAME}...`);
 
 			Facebook_Profile(user.FB_PROF_ID);
 
 			break;
 
 		case "oip":
-			customConsole(`Opening Instagram profile of ${user.NAME}...`);
+			customLog(`Opening Instagram profile of ${user.NAME}...`);
 
 			Instagram_Profile(user.INST_ID);
 
 			break;
 
-		/* Open stories */
+		/* Opens stories */
 		case "ofs":
-			customConsole(`Opening Facebook stories of ${user.NAME}...`);
+			customLog(`Opening Facebook stories of ${user.NAME}...`);
 
 			Facebook_Stories(user.FB_STOR_ID);
 
 			break;
 
 		case "ois":
-			customConsole(`Opening Instagram stories of ${user.NAME}...`);
+			customLog(`Opening Instagram stories of ${user.NAME}...`);
 
 			Instagram_Stories(user.INST_ID);
 
 			break;
 
-		/* Open all */
+		/* Opens all */
 		case "oa":
-			customConsole(`Opening all pages of ${user.NAME}...`);
+			customLog(`Opening all pages of ${user.NAME}...`);
 
 			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
-		/* Open gallery */
+		/* Opens gallery */
 		case "og":
-			customConsole(`Opening gallery of ${user.NAME}...`);
+			customLog(`Opening gallery of ${user.NAME}...`);
 
 			openGallery(`USER_${commandArguments[1]}`);
 
 			break;
 
-		/* Close gallery */
+		/* Closes gallery */
 		case "cg":
-			customConsole(`Closing gallery...`);
+			customLog(`Closing gallery...`);
 
 			closeGallery();
 
@@ -394,77 +402,126 @@ function consoleCommands() {
 
 		/* Commands for default user */
 		case "dap":
-			customConsole(`Opening all profiles of ${dUser.NAME}...`);
+			customLog(`Opening all profiles of ${dUser.NAME}...`);
 
 			profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
 
 			break;
 
 		case "das":
-			customConsole(`Opening all stories of ${dUser.NAME}...`);
+			customLog(`Opening all stories of ${dUser.NAME}...`);
 
 			stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 			break;
 
 		case "dfp":
-			customConsole(`Opening Facebook profile of ${dUser.NAME}...`);
+			customLog(`Opening Facebook profile of ${dUser.NAME}...`);
 
 			Facebook_Profile(dUser.FB_PROF_ID);
 
 			break;
 
 		case "dip":
-			customConsole(`Opening Instagram profile of ${dUser.NAME}...`);
+			customLog(`Opening Instagram profile of ${dUser.NAME}...`);
 
 			Instagram_Profile(dUser.INST_ID);
 
 			break;
 
 		case "dfs":
-			customConsole(`Opening Facebook stories of ${dUser.NAME}...`);
+			customLog(`Opening Facebook stories of ${dUser.NAME}...`);
 
 			Facebook_Stories(dUser.FB_STOR_ID);
 
 			break;
 
 		case "dis":
-			customConsole(`Opening Instagram stories of ${dUser.NAME}...`);
+			customLog(`Opening Instagram stories of ${dUser.NAME}...`);
 
 			Instagram_Stories(dUser.INST_ID);
 
 			break;
 
 		case "da":
-			customConsole(`Opening all pages of ${dUser.NAME}...`);
+			customLog(`Opening all pages of ${dUser.NAME}...`);
 
 			openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 			break;
 
 		case "g":
-			customConsole(`Opening gallery of ${dUser.NAME}...`);
+			customLog(`Opening gallery of ${dUser.NAME}...`);
 
 			openGallery(defaultUser);
 
 			break;
 
 		/* Service commands */
-		case "/":
-			customConsole(`Exit`);
 
+		// Hides log
+		case "hl":
+			hideLog();
+
+			break;
+
+		// Shows log
+		case "sl":
+			showLog();
+
+			break;
+
+		// Clears log list
+		case "c":
+			refConsoleLog.innerHTML = "";
+
+			break;
+
+		// Exit
+		case "/":
 			location.reload();
 
 			break;
 
 		default:
-			customConsole(`\x1b[31mError: Command not found`);
+			customLog(`Error: Command "${command}" not found`);
 	}
 
 	refConsole.value = "";
 }
 
-function customConsole(info) {
+function hideLog() {
+	refConsoleLog.style.visibility = "hidden";
+}
+
+function showLog() {
+	refConsoleLog.style.visibility = "";
+}
+
+function customLog(info) {
+	let logColor = "";
+
+	if (info.includes("Error") || info.includes("denied")) logColor = "style='color: #822'";
+
+	if (info.includes("allowed")) logColor = "style='color: #282'";
+
+	let log = `
+		<span ${logColor}>${info}</span>
+	`;
+
+	const newLog = document.createElement("li");
+
+	newLog.innerHTML = `
+		<b style="color: #358">${currentUser}@faver</b>:~$ <b style="color: #883">${command}</b>
+		<br/>
+		${log}
+		<br/><br/>
+	`;
+
+	refConsoleLog.append(newLog);
+
+	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+
 	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
 }
 

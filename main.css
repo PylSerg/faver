@@ -124,7 +124,11 @@ button {
 
     margin: 50px auto;
     padding: 0;
+
     list-style: none;
+
+    overflow: scroll;
+    scroll-behavior: smooth;
 }
 
 
@@ -427,14 +431,33 @@ button {
 
     z-index: 999;
 
-    & span {
+    & .console-marker {
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 5px;
 
         font-size: 20px;
         font-weight: 700;
     }
+}
+
+#console-log {
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+
+    width: 100vw;
+
+
+    margin: 0;
+    padding: 20px;
+
+    background-color: #111;
+
+    border-top: var(--border);
+
+    list-style: none;
+    overflow: scroll;
 }
 
 #console {
