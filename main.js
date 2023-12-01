@@ -41,6 +41,7 @@ function autoSendingPassword(pass) {
 
 async function checkAccess(pass) {
 	command = "check access";
+	customConsole(`Checking access...`);
 
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
@@ -307,58 +308,58 @@ function consoleCommands() {
 
 	switch (commandArguments[0]) {
 		case "odb":
-			window.open(DB, "_blank");
-
 			customConsole(`Opening database...`);
+
+			window.open(DB, "_blank");
 
 			break;
 
 		case "oap":
-			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
-
 			customConsole(`Opening all profiles of ${user.NAME}...`);
+
+			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
 
 			break;
 
 		case "ofp":
-			Facebook_Profile(user.FB_PROF_ID);
-
 			customConsole(`Opening Facebook profile of ${user.NAME}...`);
+
+			Facebook_Profile(user.FB_PROF_ID);
 
 			break;
 
 		case "oip":
-			Instagram_Profile(user.INST_ID);
-
 			customConsole(`Opening Instagram profile of ${user.NAME}...`);
+
+			Instagram_Profile(user.INST_ID);
 
 			break;
 
 		case "oas":
-			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
-
 			customConsole(`Opening all stories of ${user.NAME}...`);
+
+			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
 		case "ofs":
-			Facebook_Stories(user.FB_STOR_ID);
-
 			customConsole(`Opening Facebook stories of ${user.NAME}...`);
+
+			Facebook_Stories(user.FB_STOR_ID);
 
 			break;
 
 		case "ois":
-			Instagram_Stories(user.INST_ID);
-
 			customConsole(`Opening Instagram stories of ${user.NAME}...`);
+
+			Instagram_Stories(user.INST_ID);
 
 			break;
 
 		case "oa":
-			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
-
 			customConsole(`Opening all pages of ${user.NAME}...`);
+
+			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
@@ -370,9 +371,7 @@ function consoleCommands() {
 }
 
 function customConsole(info) {
-	const date = new Date();
-
-	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${date}\n\n${info}\n\n`);
+	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
 }
 
 refConsole.addEventListener("keydown", sendConsoleCommand);
