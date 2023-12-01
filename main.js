@@ -1,4 +1,5 @@
 const SERVER = "https://script.google.com/macros/s/AKfycbzaRdbc06QSFZlU5Vfp7sxwh70CgRJtv5tyLqfMRwV29aZimZ1S46jirhsUafVsmJJZpQ/exec";
+let DB = "";
 
 const refAccess = document.querySelector(".access");
 const refAccessText = document.querySelector(".access-text");
@@ -14,13 +15,16 @@ const refNext = document.querySelector("#next");
 const refAllPhotos = document.querySelector("#all-photos");
 const refToggleAllPhotos = document.querySelector(".toggle-all-photos");
 
-const refOpenDatabase = document.querySelector("#open-database");
+const refConsoleBlock = document.querySelector(".console-block");
+const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
 let activeUser = "";
 let showAllPhoto = null;
 let photoCounter = 0;
+
+let command = "";
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -57,7 +61,7 @@ function initialization(data) {
 		}
 	});
 
-	refOpenDatabase.setAttribute("href", data.database);
+	DB = data.database;
 
 	openAccess();
 }
@@ -66,7 +70,11 @@ function openAccess() {
 	setTimeout(() => {
 		refAccess.remove();
 
-		refOpenDatabase.style.display = "block";
+		refConsoleBlock.style.display = "block";
+
+		setInterval(() => {
+			refConsole.focus();
+		}, 1000);
 	}, 1000);
 
 	refAccessInput.remove();
@@ -271,3 +279,22 @@ function selectPhoto(indx) {
 
 	toggleAllPhotos();
 }
+
+function getConsoleCommand(cmd) {
+	command = cmd;
+}
+
+function sendConsoleCommand(e) {
+	if (e.key === "Enter") consoleCommands();
+}
+
+function consoleCommands() {
+	switch (command) {
+		case "db":
+			window.open(DB, "_blank");
+	}
+
+	refConsole.value = "";
+}
+
+refConsole.addEventListener("keydown", sendConsoleCommand);

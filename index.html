@@ -18,7 +18,7 @@
         <span class="access-text">FAVER CORP</span>
 
         <input class="access-input" type="password" placeholder="Protected"
-            oninput="autoSendingPassword(event.currentTarget.value)" autofocus />
+            oninput="autoSendingPassword(event.currentTarget.value)" autofocus="true" />
     </div>
 
     <!-- End access screen -->
@@ -43,7 +43,10 @@
 
     <!-- End Gallery -->
 
-    <a id="open-database" target="_blank">Open Database</a>
+    <div class="console-block">
+        <span>></span>
+        <input id="console" type="text" oninput="getConsoleCommand(event.currentTarget.value)">
+    </div>
 
     <script src="main.js"></script>
 

@@ -413,34 +413,43 @@ button {
 
 
 /*
-    Open database
+    Console
 */
 
-#open-database {
+.console-block {
     position: fixed;
-    left: 50%;
+    left: 0;
     bottom: 0;
-    transform: translateX(-50%);
 
     display: none;
 
-    color: var(--main-color);
-    font-size: 20px;
-    text-align: center;
-    text-decoration: none;
+    width: 100vw;
 
-    background-color: var(--main-background-color);
-    border: var(--border);
-    border-bottom: 0;
-    border-radius: 10px 10px 0 0;
+    & span {
+        position: absolute;
+        top: 0;
+        left: 5px;
 
-    padding: 10px 20px;
-
-    &:hover,
-    &:focus {
-        color: #fff;
-        background-color: var(--main-color);
+        font-size: 20px;
+        font-weight: 700;
     }
+}
+
+#console {
+    width: 100vw;
+    height: 30px;
+
+    padding-left: 30px;
+
+    color: var(--main-color);
+    font-size: 16px;
+    letter-spacing: 1px;
+
+    background-color: #000;
+
+    border: 0;
+
+    outline: none;
 }
 
 
