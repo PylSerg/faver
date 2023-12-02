@@ -346,6 +346,8 @@ button {
 #photo {
     height: 100vh;
 
+    cursor: zoom-out;
+
     @media screen and (max-width: 400px) {
         width: 100vw;
         height: max-content;

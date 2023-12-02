@@ -380,10 +380,6 @@ function getConsoleCommand(cmd) {
 	command = cmd.toLowerCase();
 }
 
-function sendConsoleCommand(e) {
-	if (e.key === "Enter") consoleCommands();
-}
-
 function consoleCommands() {
 	let commandArguments = [];
 
@@ -669,32 +665,12 @@ refGallery.addEventListener("touchend", (e) => {
 	checkDirection();
 });
 
-let startWheel = 0;
-let endWheel = 0;
-
-let wheelX = 0;
-let wheelY = 0;
-
-setInterval(() => {
-	if (wheelX > 0) changePhoto("next");
-	if (wheelX < 0) changePhoto("prev");
-
-	if (wheelY > 20) toggleAllPhotos();
-	if (wheelY < -20) closeGallery();
-
-	wheelX = 0;
-	wheelY = 0;
-}, 1000);
-
-refPhoto.addEventListener("wheel", (e) => {
-	wheelX = e.deltaX;
-	wheelY = e.deltaY;
+refConsole.addEventListener("keydown", (e) => {
+	if (e.key === "Enter") consoleCommands();
 });
 
-refConsole.addEventListener("keydown", sendConsoleCommand);
-
 document.addEventListener("auxclick", (e) => {
-	if (e.which === 2) {
+	if (e.button === 1) {
 		command = "/";
 
 		consoleCommands();
