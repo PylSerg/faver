@@ -361,7 +361,10 @@ function consoleCommands() {
 	const user = favorite[`USER_${commandArguments[1]}`];
 	const dUser = favorite[`${defaultUser}`];
 
-	switch (commandArguments[0]) {
+	const firstArgument = commandArguments[0];
+	const secondArgument = commandArguments[1];
+
+	switch (firstArgument) {
 		/* Opens Database */
 		case "odb":
 			customLog(`Opening database...`);
@@ -372,6 +375,14 @@ function consoleCommands() {
 
 		/* Opens all profiles */
 		case "oap":
+			if (secondArgument === undefined) {
+				customLog(`Opening all profiles of ${dUser.NAME}...`);
+
+				profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
+
+				break;
+			}
+
 			customLog(`Opening all profiles of ${user.NAME}...`);
 
 			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
@@ -380,6 +391,14 @@ function consoleCommands() {
 
 		/* Opens all stories */
 		case "oas":
+			if (secondArgument === undefined) {
+				customLog(`Opening all stories of ${dUser.NAME}...`);
+
+				stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+
+				break;
+			}
+
 			customLog(`Opening all stories of ${user.NAME}...`);
 
 			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
@@ -388,6 +407,14 @@ function consoleCommands() {
 
 		/* Opens profile */
 		case "ofp":
+			if (secondArgument === undefined) {
+				customLog(`Opening Facebook profile of ${dUser.NAME}...`);
+
+				Facebook_Profile(dUser.FB_PROF_ID);
+
+				break;
+			}
+
 			customLog(`Opening Facebook profile of ${user.NAME}...`);
 
 			Facebook_Profile(user.FB_PROF_ID);
@@ -395,6 +422,14 @@ function consoleCommands() {
 			break;
 
 		case "oip":
+			if (secondArgument === undefined) {
+				customLog(`Opening Instagram profile of ${dUser.NAME}...`);
+
+				Instagram_Profile(dUser.INST_ID);
+
+				break;
+			}
+
 			customLog(`Opening Instagram profile of ${user.NAME}...`);
 
 			Instagram_Profile(user.INST_ID);
@@ -403,6 +438,14 @@ function consoleCommands() {
 
 		/* Opens stories */
 		case "ofs":
+			if (secondArgument === undefined) {
+				customLog(`Opening Facebook stories of ${dUser.NAME}...`);
+
+				Facebook_Stories(dUser.FB_STOR_ID);
+
+				break;
+			}
+
 			customLog(`Opening Facebook stories of ${user.NAME}...`);
 
 			Facebook_Stories(user.FB_STOR_ID);
@@ -410,6 +453,14 @@ function consoleCommands() {
 			break;
 
 		case "ois":
+			if (secondArgument === undefined) {
+				customLog(`Opening Instagram stories of ${dUser.NAME}...`);
+
+				Instagram_Stories(dUser.INST_ID);
+
+				break;
+			}
+
 			customLog(`Opening Instagram stories of ${user.NAME}...`);
 
 			Instagram_Stories(user.INST_ID);
@@ -418,6 +469,14 @@ function consoleCommands() {
 
 		/* Opens all */
 		case "oa":
+			if (secondArgument === undefined) {
+				customLog(`Opening all pages of ${dUser.NAME}...`);
+
+				openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+
+				break;
+			}
+
 			customLog(`Opening all pages of ${user.NAME}...`);
 
 			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
@@ -426,6 +485,14 @@ function consoleCommands() {
 
 		/* Opens gallery */
 		case "og":
+			if (secondArgument === undefined) {
+				customLog(`Opening gallery of ${dUser.NAME}...`);
+
+				openGallery(defaultUser);
+
+				break;
+			}
+
 			customLog(`Opening gallery of ${user.NAME}...`);
 
 			openGallery(`USER_${commandArguments[1]}`);
@@ -437,63 +504,6 @@ function consoleCommands() {
 			customLog(`Closing gallery...`);
 
 			closeGallery();
-
-			break;
-
-		/* Commands for default user */
-		case "dap":
-			customLog(`Opening all profiles of ${dUser.NAME}...`);
-
-			profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
-
-			break;
-
-		case "das":
-			customLog(`Opening all stories of ${dUser.NAME}...`);
-
-			stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
-
-			break;
-
-		case "dfp":
-			customLog(`Opening Facebook profile of ${dUser.NAME}...`);
-
-			Facebook_Profile(dUser.FB_PROF_ID);
-
-			break;
-
-		case "dip":
-			customLog(`Opening Instagram profile of ${dUser.NAME}...`);
-
-			Instagram_Profile(dUser.INST_ID);
-
-			break;
-
-		case "dfs":
-			customLog(`Opening Facebook stories of ${dUser.NAME}...`);
-
-			Facebook_Stories(dUser.FB_STOR_ID);
-
-			break;
-
-		case "dis":
-			customLog(`Opening Instagram stories of ${dUser.NAME}...`);
-
-			Instagram_Stories(dUser.INST_ID);
-
-			break;
-
-		case "da":
-			customLog(`Opening all pages of ${dUser.NAME}...`);
-
-			openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
-
-			break;
-
-		case "g":
-			customLog(`Opening gallery of ${dUser.NAME}...`);
-
-			openGallery(defaultUser);
 
 			break;
 
