@@ -511,7 +511,7 @@ function consoleCommands() {
 
 		// Off\On GUI
 		case "gui":
-			if (commandArguments[1] === "on") {
+			if (secondArgument === "on") {
 				GUI = true;
 
 				refGuiSwitcher.style.color = "#ccc";
@@ -525,7 +525,7 @@ function consoleCommands() {
 				customLog(`GUI is on`);
 			}
 
-			if (commandArguments[1] === "off") {
+			if (secondArgument === "off") {
 				GUI = false;
 
 				refGuiSwitcher.style.color = "var(--main-color)";
