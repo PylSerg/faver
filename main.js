@@ -21,7 +21,7 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
-let GUI = false;
+let GUI = true;
 
 let activeUser = "";
 let defaultUser = "USER_1";
@@ -333,7 +333,7 @@ function selectPhoto(indx) {
 	Console
 */
 function getConsoleCommand(cmd) {
-	command = cmd;
+	command = cmd.toLowerCase();
 }
 
 function sendConsoleCommand(e) {
