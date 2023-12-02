@@ -692,3 +692,11 @@ refPhoto.addEventListener("wheel", (e) => {
 });
 
 refConsole.addEventListener("keydown", sendConsoleCommand);
+
+document.addEventListener("auxclick", (e) => {
+	if (e.which === 2) {
+		command = "/";
+
+		consoleCommands();
+	}
+});
