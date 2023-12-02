@@ -272,6 +272,7 @@ function openGallery(user) {
 	hideLog();
 	viewAllPhotos();
 
+	refGallery.style.visibility = "visible";
 	refConsole.style.backgroundColor = "transparent";
 	refGallery.style.display = "flex";
 	refAllPhotos.style.display = "flex";
@@ -512,6 +513,7 @@ function consoleCommands() {
 
 		/* Opens gallery */
 		case "og":
+		case ";":
 			if (secondArgument === undefined) {
 				customLog(`Opening gallery of ${dUser.NAME}...`);
 
@@ -528,9 +530,25 @@ function consoleCommands() {
 
 		/* Closes gallery */
 		case "cg":
+		case "'":
 			customLog(`Closing gallery...`);
 
 			closeGallery();
+
+			break;
+
+		/* Show\hide gallery */
+		case "]":
+			refGallery.style.visibility = "visible";
+
+			hideLog();
+
+			break;
+
+		case "[":
+			refGallery.style.visibility = "hidden";
+
+			showLog();
 
 			break;
 
