@@ -36,6 +36,9 @@ let currentUser = "guest";
 let command = "start";
 let logger = false;
 
+let touchstartX = 0;
+let touchendX = 0;
+
 customLog("Starting Faver...");
 
 function autoSendingPassword(pass) {
@@ -650,5 +653,20 @@ function customLog(info) {
 
 	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
 }
+
+function checkDirection() {
+	if (touchendX < touchstartX) changePhoto("prev");
+	if (touchendX > touchstartX) changePhoto("next");
+}
+
+refGallery.addEventListener("touchstart", (e) => {
+	touchstartX = e.changedTouches[0].screenX;
+});
+
+refGallery.addEventListener("touchend", (e) => {
+	touchendX = e.changedTouches[0].screenX;
+
+	checkDirection();
+});
 
 refConsole.addEventListener("keydown", sendConsoleCommand);
