@@ -537,7 +537,7 @@ function consoleCommands() {
 
 			break;
 
-		/* Show\hide gallery */
+		/* Shows\hides gallery */
 		case "]":
 			refGallery.style.visibility = "visible";
 
@@ -549,6 +549,18 @@ function consoleCommands() {
 			refGallery.style.visibility = "hidden";
 
 			showLog();
+
+			break;
+
+		/* Shows birthday */
+		case "bd":
+			if (secondArgument === undefined) {
+				customLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`);
+
+				break;
+			}
+
+			customLog(`Birthday of ${user.NAME}: ${user.BIRTHDAY}`);
 
 			break;
 
