@@ -103,11 +103,8 @@ function openAccess() {
 	refAccessText.style.color = "#0a0";
 	refAccessText.style.borderColor = "#0a0";
 
-	if (GUI === "true") {
-		command = "gui on";
-	} else {
-		command = "gui off";
-	}
+	if (GUI === "on") command = "gui on";
+	if (GUI === "off") command = "gui off";
 
 	consoleCommands();
 }
@@ -194,11 +191,11 @@ function createCardsWithoutGUI() {
 
 function guiSwitcher() {
 	if (GUI) {
-		GUI = false;
+		GUI = "off";
 
 		command = "gui off";
 	} else {
-		GUI = true;
+		GUI = "on";
 
 		command = "gui on";
 	}
@@ -504,20 +501,6 @@ function consoleCommands() {
 
 		// Off\On GUI
 		case "gui":
-			if (commandArguments[1] === "off") {
-				GUI = false;
-
-				refGuiSwitcher.style.color = "var(--main-color)";
-				refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
-
-				createCardsWithoutGUI();
-				showLog();
-
-				localStorage.setItem("GUI", false);
-
-				customLog(`GUI is off`);
-			}
-
 			if (commandArguments[1] === "on") {
 				GUI = true;
 
@@ -527,9 +510,23 @@ function consoleCommands() {
 				createCards();
 				hideLog();
 
-				localStorage.setItem("GUI", true);
+				localStorage.setItem("GUI", "on");
 
 				customLog(`GUI is on`);
+			}
+
+			if (commandArguments[1] === "off") {
+				GUI = false;
+
+				refGuiSwitcher.style.color = "var(--main-color)";
+				refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
+
+				createCardsWithoutGUI();
+				showLog();
+
+				localStorage.setItem("GUI", "off");
+
+				customLog(`GUI is off`);
 			}
 
 			break;
