@@ -287,6 +287,8 @@ button {
 
     background-color: #000;
 
+    overflow: scroll;
+
     z-index: 999;
 }
 
@@ -344,7 +346,7 @@ button {
 }
 
 #photo {
-    height: 100vh;
+    max-height: 100vh;
 
     cursor: zoom-out;
 
