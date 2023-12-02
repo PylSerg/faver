@@ -23,7 +23,7 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
-let GUI = true;
+let GUI = localStorage.getItem("GUI");
 
 let activeUser = "";
 let defaultUser = "USER_1";
@@ -103,7 +103,7 @@ function openAccess() {
 	refAccessText.style.color = "#0a0";
 	refAccessText.style.borderColor = "#0a0";
 
-	if (GUI) {
+	if (GUI === "true") {
 		command = "gui on";
 	} else {
 		command = "gui off";
@@ -513,6 +513,8 @@ function consoleCommands() {
 				createCardsWithoutGUI();
 				showLog();
 
+				localStorage.setItem("GUI", false);
+
 				customLog(`GUI is off`);
 			}
 
@@ -524,6 +526,8 @@ function consoleCommands() {
 
 				createCards();
 				hideLog();
+
+				localStorage.setItem("GUI", true);
 
 				customLog(`GUI is on`);
 			}
