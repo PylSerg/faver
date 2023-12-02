@@ -190,17 +190,39 @@ function createCardsWithoutGUI() {
 }
 
 function guiSwitcher() {
-	if (GUI) {
-		GUI = "off";
+	switch (GUI) {
+		case "on":
+			GUI = "off";
 
-		command = "gui off";
-	} else {
-		GUI = "on";
+			command = "gui off";
 
-		command = "gui on";
+			break;
+
+		case "off":
+			GUI = "on";
+
+			command = "gui on";
+
+			break;
 	}
 
 	consoleCommands();
+}
+
+function changeGuiButton() {
+	switch (GUI) {
+		case "on":
+			refGuiSwitcher.style.color = "#ccc";
+			refGuiSwitcher.style.backgroundColor = "var(--main-color)";
+
+			break;
+
+		case "off":
+			refGuiSwitcher.style.color = "var(--main-color)";
+			refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
+
+			break;
+	}
 }
 
 function stories(id) {
@@ -495,7 +517,7 @@ function consoleCommands() {
 
 			customLog(`Opening gallery of ${user.NAME}...`);
 
-			openGallery(`USER_${commandArguments[1]}`);
+			openGallery(`USER_${secondArgument}`);
 
 			break;
 
@@ -507,16 +529,26 @@ function consoleCommands() {
 
 			break;
 
+		/* Photo quantity */
+		case "phq":
+			if (secondArgument === undefined) {
+				customLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`);
+
+				break;
+			}
+
+			customLog(`${user.PHOTOS.length} photos of ${user.NAME}`);
+
+			break;
+
 		/* Service commands */
 
 		// Off\On GUI
 		case "gui":
 			if (secondArgument === "on") {
-				GUI = true;
+				GUI = "on";
 
-				refGuiSwitcher.style.color = "#ccc";
-				refGuiSwitcher.style.backgroundColor = "var(--main-color)";
-
+				changeGuiButton();
 				createCards();
 				hideLog();
 
@@ -526,11 +558,9 @@ function consoleCommands() {
 			}
 
 			if (secondArgument === "off") {
-				GUI = false;
+				GUI = "off";
 
-				refGuiSwitcher.style.color = "var(--main-color)";
-				refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
-
+				changeGuiButton();
 				createCardsWithoutGUI();
 				showLog();
 
