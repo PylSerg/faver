@@ -649,14 +649,14 @@ function customLog(info) {
 
 	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
-	command = "";
-
 	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
+
+	command = "";
 }
 
 function checkDirection() {
-	if (touchendX < touchstartX) changePhoto("prev");
-	if (touchendX > touchstartX) changePhoto("next");
+	if (touchendX < touchstartX) changePhoto("next");
+	if (touchendX > touchstartX) changePhoto("prev");
 }
 
 refGallery.addEventListener("touchstart", (e) => {
@@ -667,6 +667,28 @@ refGallery.addEventListener("touchend", (e) => {
 	touchendX = e.changedTouches[0].screenX;
 
 	checkDirection();
+});
+
+let startWheel = 0;
+let endWheel = 0;
+
+let wheelX = 0;
+let wheelY = 0;
+
+setInterval(() => {
+	if (wheelX > 0) changePhoto("next");
+	if (wheelX < 0) changePhoto("prev");
+
+	if (wheelY > 20) toggleAllPhotos();
+	if (wheelY < -20) closeGallery();
+
+	wheelX = 0;
+	wheelY = 0;
+}, 1000);
+
+refPhoto.addEventListener("wheel", (e) => {
+	wheelX = e.deltaX;
+	wheelY = e.deltaY;
 });
 
 refConsole.addEventListener("keydown", sendConsoleCommand);
