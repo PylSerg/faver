@@ -28,6 +28,7 @@ let GUI = localStorage.getItem("GUI") || "on";
 let activeUser = "";
 let defaultUser = "USER_1";
 
+let gallery = "closed";
 let showAllPhoto = null;
 let photoCounter = 0;
 
@@ -256,8 +257,12 @@ function Instagram_Profile(id) {
 	if (id !== "") window.open(`https://www.instagram.com/${id}`, "_blank");
 }
 
+/*
+	Gallery
+*/
 function openGallery(user) {
 	activeUser = user;
+	gallery = "opened";
 	photoCounter = 0;
 	showAllPhoto = true;
 
@@ -285,8 +290,9 @@ function closeGallery() {
 	refAllPhotos.style.display = "none";
 	refConsole.style.backgroundColor = "#000";
 
-	if (!GUI) showLog();
+	if (GUI === "off") showLog();
 
+	gallery = "closed";
 	activeUser = "";
 }
 
@@ -604,12 +610,16 @@ function hideLog() {
 	refConsoleLog.style.visibility = "hidden";
 
 	logger = false;
+
+	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
 }
 
 function showLog() {
 	refConsoleLog.style.visibility = "visible";
 
 	logger = true;
+
+	if (gallery === "opened") refConsole.style.backgroundColor = "#000";
 }
 
 function customLog(info) {
