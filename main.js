@@ -23,7 +23,7 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
-let GUI = localStorage.getItem("GUI");
+let GUI = localStorage.getItem("GUI") || "on";
 
 let activeUser = "";
 let defaultUser = "USER_1";
@@ -635,6 +635,8 @@ function customLog(info) {
 	refConsoleLog.append(newLog);
 
 	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+
+	command = "";
 
 	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
 }
