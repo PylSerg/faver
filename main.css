@@ -467,7 +467,7 @@ button {
     visibility: hidden;
 
     width: 100vw;
-
+    max-height: 50vh;
 
     margin: 0;
     padding: 20px;
