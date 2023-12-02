@@ -11,17 +11,7 @@
 </head>
 
 <body>
-
-    <!-- Access screen -->
-
-    <div class="access">
-        <span class="access-text">FAVER CORP</span>
-
-        <input class="access-input" type="password" placeholder="Protected"
-            oninput="autoSendingPassword(event.currentTarget.value)" autofocus="true" />
-    </div>
-
-    <!-- End access screen -->
+    <button id="gui-switcher" onclick="guiSwitcher()">GUI</button>
 
     <ul id="favorite"></ul>
 
@@ -43,6 +33,8 @@
 
     <!-- End Gallery -->
 
+    <!-- Console -->
+
     <div class="console-block">
         <ul id="console-log"></ul>
 
@@ -50,6 +42,19 @@
         <span class="console-marker">></span>
         <input id="console" type="text" oninput="getConsoleCommand(event.currentTarget.value)">
     </div>
+
+    <!-- End console -->
+
+    <!-- Access screen -->
+
+    <div class="access">
+        <span class="access-text">FAVER CORP</span>
+
+        <input class="access-input" type="password" placeholder="Protected"
+            oninput="autoSendingPassword(event.currentTarget.value)" autofocus="true" />
+    </div>
+
+    <!-- End access screen -->
 
     <script src="main.js"></script>
 

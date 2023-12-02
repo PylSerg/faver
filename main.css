@@ -29,6 +29,8 @@ button {
     border: var(--border);
     border-radius: var(--border-radius);
 
+    cursor: pointer;
+
     &:hover,
     &:focus {
         color: #ccc;
@@ -107,6 +109,22 @@ button {
 
 .access-text--error {
     animation: error 1000ms linear;
+}
+
+
+/*
+    GUI
+*/
+
+#gui-switcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    color: #ccc;
+    font-weight: 700;
+
+    background-color: var(--main-color);
 }
 
 

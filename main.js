@@ -5,6 +5,8 @@ const refAccess = document.querySelector(".access");
 const refAccessText = document.querySelector(".access-text");
 const refAccessInput = document.querySelector(".access-input");
 
+const refGuiSwitcher = document.querySelector("#gui-switcher");
+
 const refFavorite = document.querySelector("#favorite");
 
 const refGallery = document.querySelector(".gallery-block");
@@ -188,6 +190,20 @@ function createCardsWithoutGUI() {
 			${user}: ${data.NAME}
 		`;
 	}
+}
+
+function guiSwitcher() {
+	if (GUI) {
+		GUI = false;
+
+		command = "gui off";
+	} else {
+		GUI = true;
+
+		command = "gui on";
+	}
+
+	consoleCommands();
 }
 
 function stories(id) {
@@ -491,6 +507,9 @@ function consoleCommands() {
 			if (commandArguments[1] === "off") {
 				GUI = false;
 
+				refGuiSwitcher.style.color = "var(--main-color)";
+				refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
+
 				createCardsWithoutGUI();
 				showLog();
 
@@ -499,6 +518,9 @@ function consoleCommands() {
 
 			if (commandArguments[1] === "on") {
 				GUI = true;
+
+				refGuiSwitcher.style.color = "#ccc";
+				refGuiSwitcher.style.backgroundColor = "var(--main-color)";
 
 				createCards();
 				hideLog();
