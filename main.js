@@ -706,5 +706,3 @@ document.addEventListener("auxclick", (e) => {
 		consoleCommands();
 	}
 });
-
-console.log(window.navigator.userAgentData.mobile);
