@@ -97,7 +97,7 @@ function openAccess() {
 		refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
 		setInterval(() => {
-			refConsole.focus();
+			if (!window.navigator.userAgentData.mobile) refConsole.focus();
 		}, 1000);
 	}, 1000);
 
@@ -706,3 +706,5 @@ document.addEventListener("auxclick", (e) => {
 		consoleCommands();
 	}
 });
+
+console.log(window.navigator.userAgentData.mobile);
