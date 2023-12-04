@@ -26,7 +26,7 @@ const favorite = {};
 
 let GUI = localStorage.getItem("GUI") || "on";
 
-let activeUser = "";
+let activeUser = "USER_1";
 let defaultUser = "USER_1";
 
 let gallery = "closed";
@@ -266,8 +266,17 @@ function Instagram_Profile(id) {
 	Gallery
 */
 function openGallery(user) {
+	if (gallery === "opened" && activeUser === user) {
+		customLog(`Gallery is already open!`);
+
+		return;
+	}
+
+	customLog(`Opening gallery of ${favorite[user].NAME}...`);
+
 	activeUser = user;
 	gallery = "opened";
+	showAllPhoto = false;
 	photoCounter = 0;
 
 	hideLog();
@@ -288,9 +297,13 @@ function openGallery(user) {
 			break;
 		}
 	}
+
+	customLog(`Gallery is opened`);
 }
 
 function changePhoto(action) {
+	if (zoom) zoomPhoto();
+
 	for (const key in favorite) {
 		const data = favorite[key];
 
@@ -343,12 +356,15 @@ function selectPhoto(indx) {
 }
 
 function toggleAllPhotos() {
+	if (zoom) zoomPhoto();
+
 	if (!showAllPhoto) {
 		showAllPhoto = true;
 
 		refZoomButton.style.display = "none";
 		refAllPhotos.style.display = "flex";
 		refToggleAllPhotos.setAttribute("src", "photo.png");
+		refPhoto.style.zIndex = "1";
 
 		return;
 	}
@@ -368,21 +384,37 @@ function zoomPhoto() {
 	if (!zoom) {
 		refZoomButton.setAttribute("class", "zoom-button zoom-button--active");
 
+		refPhoto.style.maxHeight = "10000px";
+		refPhoto.style.position = "absolute";
+		refPhoto.style.top = "0";
+		refPhoto.style.zIndex = "100";
+
+		refPhoto.setAttribute("onClick", "zoomPhoto()");
+
 		zoom = true;
+
+		customLog(`Zoom is on`);
 
 		return;
 	}
 
 	if (zoom) {
 		refZoomButton.setAttribute("class", "zoom-button");
+		refPhoto.setAttribute("onClick", "toggleAllPhotos()");
+
+		refPhoto.removeAttribute("style");
 
 		zoom = false;
+
+		customLog(`Zoom is off`);
 
 		return;
 	}
 }
 
 function closeGallery() {
+	customLog(`Closing gallery...`);
+
 	refGallery.style.display = "none";
 	refAllPhotos.style.display = "none";
 	refConsole.style.backgroundColor = "#000";
@@ -392,6 +424,10 @@ function closeGallery() {
 	gallery = "closed";
 	showAllPhoto = false;
 	activeUser = "";
+
+	if (zoom) zoomPhoto();
+
+	customLog(`Gallery is closed`);
 }
 
 /* 
@@ -535,14 +571,10 @@ function consoleCommands() {
 		case "og":
 		case ";":
 			if (secondArgument === undefined) {
-				customLog(`Opening gallery of ${dUser.NAME}...`);
-
 				openGallery(defaultUser);
 
 				break;
 			}
-
-			customLog(`Opening gallery of ${user.NAME}...`);
 
 			openGallery(`USER_${secondArgument}`);
 
@@ -551,22 +583,36 @@ function consoleCommands() {
 		/* Closes gallery */
 		case "cg":
 		case "'":
-			customLog(`Closing gallery...`);
-
 			closeGallery();
 
 			break;
 
 		/* Shows\hides gallery */
 		case "]":
+			if (gallery === "closed") {
+				customLog(`Error: Gallery is closed!`);
+
+				break;
+			}
+
 			refGallery.style.visibility = "visible";
+
+			customLog(`Gallery is show`);
 
 			hideLog();
 
 			break;
 
 		case "[":
+			if (gallery === "closed") {
+				customLog(`Error: Gallery is closed!`);
+
+				break;
+			}
+
 			refGallery.style.visibility = "hidden";
+
+			customLog(`Gallery is hide`);
 
 			showLog();
 
@@ -701,6 +747,8 @@ function customLog(info) {
 }
 
 function checkDirection() {
+	if (zoom) return;
+
 	if (touchendX < touchstartX) changePhoto("next");
 	if (touchendX > touchstartX) changePhoto("prev");
 }

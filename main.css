@@ -1,7 +1,7 @@
 :root {
     --main-background-color: #111;
 
-    --main-color: #a14b04;
+    --main-color: #e16804;
     --main-font-family: Saira;
 
     --border: 3px solid var(--main-color);
@@ -382,6 +382,8 @@ button {
     background-color: transparent;
     border-color: #555;
 
+    z-index: 101;
+
     &:hover,
     &:focus {
         color: #555;
@@ -460,6 +462,8 @@ button {
     background-color: var(--main-background-color);
 
     overflow: scroll;
+
+    z-index: 99;
 
     @media screen and (max-width: 400px) {
         flex-direction: column;
