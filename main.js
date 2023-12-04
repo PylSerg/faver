@@ -27,7 +27,7 @@ const favorite = {};
 let mobile = window.navigator.userAgentData.mobile;
 let focusOnConsole = "setInterval";
 
-let GUI = localStorage.getItem("GUI") || "on";
+let GUI = localStorage.getItem("GUI") ?? "on";
 
 let activeUser = "USER_1";
 let defaultUser = "USER_1";
@@ -40,7 +40,8 @@ let zoom = false;
 let currentUser = "guest";
 let command = "start";
 let logger = false;
-let isConsoleActive = true;
+let isConsoleActive = false;
+
 const shortCommand = [">", ":", '"', "{", "}", "L"];
 
 let touchstartX = 0;
@@ -112,12 +113,19 @@ function openAccess() {
 	setTimeout(() => {
 		refAccess.remove();
 
-		refConsoleBlock.style.display = "block";
-		refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+		if (GUI === "on") {
+			hideConsole();
 
-		focusOnConsole = setInterval(() => {
-			if (!mobile) refConsole.focus();
-		}, 1000);
+			return;
+		}
+
+		if (GUI === "off") {
+			refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+
+			focusOnConsole = setInterval(() => {
+				if (!mobile) refConsole.focus();
+			}, 1000);
+		}
 	}, 1000);
 
 	refAccessInput.remove();
@@ -129,7 +137,7 @@ function openAccess() {
 	if (GUI === "on") command = "gui on";
 	if (GUI === "off") command = "gui off";
 
-	consoleCommands();
+	runCommand();
 }
 
 function closeAccess() {
@@ -212,7 +220,7 @@ function createCardsWithoutGUI() {
 	}
 }
 
-function guiSwitcher() {
+function toggleGUI() {
 	switch (GUI) {
 		case "on":
 			GUI = "off";
@@ -229,7 +237,7 @@ function guiSwitcher() {
 			break;
 	}
 
-	consoleCommands();
+	runCommand();
 }
 
 function changeGuiButton() {
@@ -286,7 +294,7 @@ function openGallery(user) {
 	if (mobile) refPhoto.setAttribute("onClick", "zoomPhoto()");
 
 	if (gallery === "opened" && activeUser === user) {
-		customLog(`Gallery is already open!`);
+		customLog(`W: Gallery is already open! \n Use command "sg" to show gallery.`);
 
 		return;
 	}
@@ -470,7 +478,7 @@ function getConsoleCommand(cmd) {
 	command = cmd.toLowerCase();
 }
 
-function consoleCommands() {
+function runCommand() {
 	let commandArguments = [];
 
 	commandArguments = command.split(" ");
@@ -621,7 +629,7 @@ function consoleCommands() {
 		/* Shows\hides gallery */
 		case "sg":
 			if (gallery === "closed") {
-				customLog(`Error: Gallery is closed!`);
+				customLog(`E: Gallery is closed!`);
 
 				break;
 			}
@@ -636,7 +644,7 @@ function consoleCommands() {
 
 		case "hg":
 			if (gallery === "closed") {
-				customLog(`Error: Gallery is closed!`);
+				customLog(`E: Gallery is closed!`);
 
 				break;
 			}
@@ -683,6 +691,7 @@ function consoleCommands() {
 				changeGuiButton();
 				createCards();
 				hideLog();
+				hideConsole();
 
 				localStorage.setItem("GUI", "on");
 
@@ -694,6 +703,7 @@ function consoleCommands() {
 
 				changeGuiButton();
 				createCardsWithoutGUI();
+				showConsole();
 				showLog();
 
 				localStorage.setItem("GUI", "off");
@@ -726,18 +736,10 @@ function consoleCommands() {
 			break;
 
 		default:
-			customLog(`Error: Command "${command}" not found`);
+			customLog(`E: Command "${command}" not found`);
 	}
 
 	refConsole.value = "";
-}
-
-function hideLog() {
-	refConsoleLog.style.visibility = "hidden";
-
-	logger = false;
-
-	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
 }
 
 function showLog() {
@@ -748,10 +750,40 @@ function showLog() {
 	if (gallery === "opened") refConsole.style.backgroundColor = "#000";
 }
 
+function hideLog() {
+	refConsoleLog.style.visibility = "hidden";
+
+	logger = false;
+
+	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
+}
+
+function showConsole() {
+	isConsoleActive = true;
+
+	refConsoleBlock.style.display = "block";
+
+	showLog();
+
+	return;
+}
+
+function hideConsole() {
+	isConsoleActive = false;
+
+	refConsoleBlock.style.display = "none";
+
+	hideLog();
+
+	return;
+}
+
 function customLog(info) {
 	let logColor = "";
 
-	if (info.includes("Error") || info.includes("denied")) logColor = "style='color: #822'";
+	if (info.includes("E:") || info.includes("denied")) logColor = "style='color: #822'";
+
+	if (info.includes("W:")) logColor = "style='color: #882'";
 
 	if (info.includes("allowed")) logColor = "style='color: #282'";
 
@@ -799,14 +831,14 @@ refGallery.addEventListener("touchend", (e) => {
 });
 
 refConsole.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") consoleCommands();
+	if (e.key === "Enter") runCommand();
 });
 
 document.addEventListener("auxclick", (e) => {
 	if (e.button === 1) {
 		command = "/";
 
-		consoleCommands();
+		runCommand();
 	}
 });
 
@@ -869,7 +901,7 @@ document.addEventListener("keydown", (e) => {
 		if (!isConsoleActive) {
 			isConsoleActive = true;
 
-			showLog();
+			showConsole();
 
 			focusOnConsole = setInterval(() => {
 				if (!mobile) refConsole.focus();
@@ -879,7 +911,7 @@ document.addEventListener("keydown", (e) => {
 		} else {
 			isConsoleActive = false;
 
-			hideLog();
+			hideConsole();
 
 			clearInterval(focusOnConsole);
 
@@ -896,7 +928,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === ":") {
 		command = "og";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
@@ -904,7 +936,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === '"') {
 		command = "cg";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
@@ -912,7 +944,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === "{") {
 		command = "hg";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
@@ -920,7 +952,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === "}") {
 		command = "sg";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
@@ -928,7 +960,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === "L") {
 		command = "l";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
@@ -936,7 +968,7 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === "?") {
 		command = "/";
 
-		consoleCommands();
+		runCommand();
 
 		return;
 	}
