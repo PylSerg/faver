@@ -372,6 +372,8 @@ button {
     @media screen and (max-width: 400px) {
         width: 100vw;
         height: max-content;
+
+        margin-bottom: 120px;
     }
 }
 
