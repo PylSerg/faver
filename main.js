@@ -266,6 +266,8 @@ function Instagram_Profile(id) {
 	Gallery
 */
 function openGallery(user) {
+	if (mobile) refPhoto.setAttribute("onClick", "zoomPhoto()");
+
 	if (gallery === "opened" && activeUser === user) {
 		customLog(`Gallery is already open!`);
 
