@@ -622,6 +622,12 @@ function consoleCommands() {
 
 			break;
 
+		/* Toggle all photos */
+		case "":
+			if (gallery === "opened") toggleAllPhotos();
+
+			break;
+
 		/* Shows birthday */
 		case "bd":
 			if (secondArgument === undefined) {
