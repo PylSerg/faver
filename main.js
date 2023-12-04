@@ -10,12 +10,13 @@ const refGuiSwitcher = document.querySelector("#gui-switcher");
 const refFavorite = document.querySelector("#favorite");
 
 const refGallery = document.querySelector(".gallery-block");
+const refAllPhotos = document.querySelector("#all-photos");
+
 const refPhoto = document.querySelector("#photo");
 const refPrev = document.querySelector("#prev");
 const refNext = document.querySelector("#next");
-
-const refAllPhotos = document.querySelector("#all-photos");
-const refToggleAllPhotos = document.querySelector(".toggle-all-photos");
+const refToggleAllPhotos = document.querySelector("#toggle-all-photos");
+const refZoomButton = document.querySelector("#zoom-button");
 
 const refConsoleBlock = document.querySelector(".console-block");
 const refConsoleLog = document.querySelector("#console-log");
@@ -29,8 +30,9 @@ let activeUser = "";
 let defaultUser = "USER_1";
 
 let gallery = "closed";
-let showAllPhoto = null;
+let showAllPhoto = false;
 let photoCounter = 0;
+let zoom = false;
 
 let currentUser = "guest";
 let command = "start";
@@ -267,7 +269,6 @@ function openGallery(user) {
 	activeUser = user;
 	gallery = "opened";
 	photoCounter = 0;
-	showAllPhoto = true;
 
 	hideLog();
 	viewAllPhotos();
@@ -275,8 +276,8 @@ function openGallery(user) {
 	refGallery.style.visibility = "visible";
 	refConsole.style.backgroundColor = "transparent";
 	refGallery.style.display = "flex";
-	refAllPhotos.style.display = "flex";
-	refToggleAllPhotos.setAttribute("src", "photo.png");
+
+	toggleAllPhotos();
 
 	for (const key in favorite) {
 		const data = favorite[key];
@@ -287,17 +288,6 @@ function openGallery(user) {
 			break;
 		}
 	}
-}
-
-function closeGallery() {
-	refGallery.style.display = "none";
-	refAllPhotos.style.display = "none";
-	refConsole.style.backgroundColor = "#000";
-
-	if (GUI === "off") showLog();
-
-	gallery = "closed";
-	activeUser = "";
 }
 
 function changePhoto(action) {
@@ -326,28 +316,6 @@ function changePhoto(action) {
 	}
 }
 
-function toggleAllPhotos() {
-	if (!showAllPhoto) {
-		showAllPhoto = true;
-
-		refAllPhotos.style.display = "flex";
-		refToggleAllPhotos.setAttribute("src", "photo.png");
-
-		viewAllPhotos();
-
-		return;
-	}
-
-	if (showAllPhoto) {
-		showAllPhoto = false;
-
-		refAllPhotos.style.display = "none";
-		refToggleAllPhotos.setAttribute("src", "gallery.png");
-
-		return;
-	}
-}
-
 function viewAllPhotos() {
 	refAllPhotos.innerHTML = "";
 
@@ -372,6 +340,58 @@ function selectPhoto(indx) {
 	refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
 
 	toggleAllPhotos();
+}
+
+function toggleAllPhotos() {
+	if (!showAllPhoto) {
+		showAllPhoto = true;
+
+		refZoomButton.style.display = "none";
+		refAllPhotos.style.display = "flex";
+		refToggleAllPhotos.setAttribute("src", "photo.png");
+
+		return;
+	}
+
+	if (showAllPhoto) {
+		showAllPhoto = false;
+
+		refZoomButton.style.display = "block";
+		refAllPhotos.style.display = "none";
+		refToggleAllPhotos.setAttribute("src", "gallery.png");
+
+		return;
+	}
+}
+
+function zoomPhoto() {
+	if (!zoom) {
+		refZoomButton.setAttribute("class", "zoom-button zoom-button--active");
+
+		zoom = true;
+
+		return;
+	}
+
+	if (zoom) {
+		refZoomButton.setAttribute("class", "zoom-button");
+
+		zoom = false;
+
+		return;
+	}
+}
+
+function closeGallery() {
+	refGallery.style.display = "none";
+	refAllPhotos.style.display = "none";
+	refConsole.style.backgroundColor = "#000";
+
+	if (GUI === "off") showLog();
+
+	gallery = "closed";
+	showAllPhoto = false;
+	activeUser = "";
 }
 
 /* 
