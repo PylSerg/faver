@@ -496,7 +496,7 @@ button {
 
     &:hover,
     &:focus {
-        border: var(--border);
+        outline: var(--border);
         border-width: 5px;
     }
 }

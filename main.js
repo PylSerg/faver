@@ -25,6 +25,7 @@ const refConsole = document.querySelector("#console");
 const favorite = {};
 
 let mobile = window.navigator.userAgentData.mobile;
+let focusOnConsole = "setInterval";
 
 let GUI = localStorage.getItem("GUI") || "on";
 
@@ -39,9 +40,12 @@ let zoom = false;
 let currentUser = "guest";
 let command = "start";
 let logger = false;
+let isConsoleActive = true;
 
 let touchstartX = 0;
 let touchendX = 0;
+
+let refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 
 customLog("Starting Faver...");
 
@@ -100,7 +104,7 @@ function openAccess() {
 		refConsoleBlock.style.display = "block";
 		refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
-		setInterval(() => {
+		focusOnConsole = setInterval(() => {
 			if (!mobile) refConsole.focus();
 		}, 1000);
 	}, 1000);
@@ -283,6 +287,9 @@ function openGallery(user) {
 	showAllPhoto = false;
 	photoCounter = 0;
 
+	isConsoleActive = false;
+	clearInterval(focusOnConsole);
+
 	hideLog();
 	viewAllPhotos();
 
@@ -339,6 +346,8 @@ function viewAllPhotos() {
 	favorite[activeUser].PHOTOS.map((photoURL) => {
 		const photoPreviewBox = document.createElement("div");
 		const photo = document.createElement("img");
+		photo.setAttribute("id", `photo-${favorite[activeUser].PHOTOS.indexOf(photoURL)}`);
+		photo.setAttribute("tabindex", favorite[activeUser].PHOTOS.indexOf(photoURL));
 
 		photoPreviewBox.setAttribute("class", "photo-review-box");
 
@@ -369,6 +378,10 @@ function toggleAllPhotos() {
 		refAllPhotos.style.display = "flex";
 		refToggleAllPhotos.setAttribute("src", "photo.png");
 		refPhoto.style.zIndex = "1";
+
+		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
+
+		refCurrentPhoto.focus();
 
 		return;
 	}
@@ -430,6 +443,11 @@ function closeGallery() {
 	activeUser = "";
 
 	if (zoom) zoomPhoto();
+
+	isConsoleActive = true;
+	focusOnConsole = setInterval(() => {
+		if (!mobile) refConsole.focus();
+	}, 1000);
 
 	customLog(`Gallery is closed`);
 }
@@ -622,12 +640,6 @@ function consoleCommands() {
 
 			break;
 
-		/* Toggle all photos */
-		case "":
-			if (gallery === "opened") toggleAllPhotos();
-
-			break;
-
 		/* Shows birthday */
 		case "bd":
 			if (secondArgument === undefined) {
@@ -783,4 +795,69 @@ document.addEventListener("auxclick", (e) => {
 
 		consoleCommands();
 	}
+});
+
+document.addEventListener("keydown", (e) => {
+	if (e.key === "ArrowRight" && showAllPhoto) {
+		photoCounter += 1;
+
+		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
+		refCurrentPhoto.focus();
+
+		return;
+	}
+
+	if (e.key === "ArrowLeft" && showAllPhoto) {
+		photoCounter -= 1;
+
+		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
+		refCurrentPhoto.focus();
+
+		return;
+	}
+
+	if (e.key === "Enter" && showAllPhoto) {
+		refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
+
+		toggleAllPhotos();
+
+		return;
+	}
+
+	if (e.key === "Enter" && gallery === "opened" && !showAllPhoto) {
+		toggleAllPhotos();
+
+		return;
+	}
+
+	if (e.key === ">") {
+		if (!isConsoleActive) {
+			isConsoleActive = true;
+
+			showLog();
+
+			focusOnConsole = setInterval(() => {
+				if (!mobile) refConsole.focus();
+				if (command === ">") refConsole.value = "";
+			}, 1000);
+
+			return;
+		} else {
+			isConsoleActive = false;
+
+			hideLog();
+
+			clearInterval(focusOnConsole);
+		}
+	}
+
+	if (e.key === ":") {
+		openGallery(defaultUser);
+
+		refConsole.value = "";
+
+		return;
+	}
+
+	if (e.key === '"') closeGallery();
 });
