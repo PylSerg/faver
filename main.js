@@ -24,6 +24,8 @@ const refConsole = document.querySelector("#console");
 
 const favorite = {};
 
+let mobile = window.navigator.userAgentData.mobile;
+
 let GUI = localStorage.getItem("GUI") || "on";
 
 let activeUser = "USER_1";
@@ -99,7 +101,7 @@ function openAccess() {
 		refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
 		setInterval(() => {
-			if (!window.navigator.userAgentData.mobile) refConsole.focus();
+			if (!mobile) refConsole.focus();
 		}, 1000);
 	}, 1000);
 
