@@ -447,6 +447,7 @@ function closeGallery() {
 	isConsoleActive = true;
 	focusOnConsole = setInterval(() => {
 		if (!mobile) refConsole.focus();
+		if (command === '"') refConsole.value = "";
 	}, 1000);
 
 	customLog(`Gallery is closed`);
@@ -816,7 +817,7 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "Enter" && showAllPhoto) {
+	if (e.key === "Enter" && showAllPhoto && !isConsoleActive) {
 		refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
 
 		toggleAllPhotos();
@@ -824,7 +825,7 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "Enter" && gallery === "opened" && !showAllPhoto) {
+	if (e.key === "Enter" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
 		toggleAllPhotos();
 
 		return;
@@ -848,6 +849,18 @@ document.addEventListener("keydown", (e) => {
 			hideLog();
 
 			clearInterval(focusOnConsole);
+
+			if (showAllPhoto) {
+				refCurrentPhoto.focus();
+			} else {
+				refGallery.focus();
+			}
+
+			focusOnConsole = setInterval(() => {
+				if (command === ">") refConsole.value = "";
+			}, 1000);
+
+			return;
 		}
 	}
 
@@ -859,5 +872,11 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === '"') closeGallery();
+	if (e.key === '"') {
+		closeGallery();
+
+		refConsole.value = "";
+
+		return;
+	}
 });
