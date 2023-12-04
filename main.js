@@ -41,6 +41,7 @@ let currentUser = "guest";
 let command = "start";
 let logger = false;
 let isConsoleActive = true;
+const shortCommand = [">", ":", '"', "{", "}", "L"];
 
 let touchstartX = 0;
 let touchendX = 0;
@@ -48,6 +49,16 @@ let touchendX = 0;
 let refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 
 customLog("Starting Faver...");
+
+setInterval(() => {
+	shortCommand.map((cmd) => {
+		if (refConsole.value === cmd) {
+			refConsole.value = "";
+
+			return;
+		}
+	});
+}, 1000);
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -447,7 +458,6 @@ function closeGallery() {
 	isConsoleActive = true;
 	focusOnConsole = setInterval(() => {
 		if (!mobile) refConsole.focus();
-		if (command === '"') refConsole.value = "";
 	}, 1000);
 
 	customLog(`Gallery is closed`);
@@ -592,7 +602,6 @@ function consoleCommands() {
 
 		/* Opens gallery */
 		case "og":
-		case ";":
 			if (secondArgument === undefined) {
 				openGallery(defaultUser);
 
@@ -605,13 +614,12 @@ function consoleCommands() {
 
 		/* Closes gallery */
 		case "cg":
-		case "'":
 			closeGallery();
 
 			break;
 
 		/* Shows\hides gallery */
-		case "]":
+		case "sg":
 			if (gallery === "closed") {
 				customLog(`Error: Gallery is closed!`);
 
@@ -626,7 +634,7 @@ function consoleCommands() {
 
 			break;
 
-		case "[":
+		case "hg":
 			if (gallery === "closed") {
 				customLog(`Error: Gallery is closed!`);
 
@@ -776,6 +784,10 @@ function checkDirection() {
 	if (touchendX > touchstartX) changePhoto("prev");
 }
 
+/*
+	Events listeners
+*/
+
 refGallery.addEventListener("touchstart", (e) => {
 	touchstartX = e.changedTouches[0].screenX;
 });
@@ -799,8 +811,34 @@ document.addEventListener("auxclick", (e) => {
 });
 
 document.addEventListener("keydown", (e) => {
+	if (e.key === "ArrowRight" && !showAllPhoto) {
+		changePhoto("next");
+
+		return;
+	}
+
+	if (e.key === "ArrowLeft" && !showAllPhoto) {
+		changePhoto("prev");
+
+		return;
+	}
+
+	if (e.key === "ArrowUp" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
+		zoomPhoto();
+
+		return;
+	}
+
+	if (e.key === "ArrowDown" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
+		toggleAllPhotos();
+
+		return;
+	}
+
 	if (e.key === "ArrowRight" && showAllPhoto) {
 		photoCounter += 1;
+
+		if (photoCounter === favorite[activeUser].PHOTOS.length) photoCounter = 0;
 
 		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 		refCurrentPhoto.focus();
@@ -810,6 +848,8 @@ document.addEventListener("keydown", (e) => {
 
 	if (e.key === "ArrowLeft" && showAllPhoto) {
 		photoCounter -= 1;
+
+		if (photoCounter < 0) photoCounter = favorite[activeUser].PHOTOS.length - 1;
 
 		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 		refCurrentPhoto.focus();
@@ -825,12 +865,6 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "Enter" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
-		toggleAllPhotos();
-
-		return;
-	}
-
 	if (e.key === ">") {
 		if (!isConsoleActive) {
 			isConsoleActive = true;
@@ -839,7 +873,6 @@ document.addEventListener("keydown", (e) => {
 
 			focusOnConsole = setInterval(() => {
 				if (!mobile) refConsole.focus();
-				if (command === ">") refConsole.value = "";
 			}, 1000);
 
 			return;
@@ -856,26 +889,46 @@ document.addEventListener("keydown", (e) => {
 				refGallery.focus();
 			}
 
-			focusOnConsole = setInterval(() => {
-				if (command === ">") refConsole.value = "";
-			}, 1000);
-
 			return;
 		}
 	}
 
 	if (e.key === ":") {
-		openGallery(defaultUser);
+		command = "og";
 
-		refConsole.value = "";
+		consoleCommands();
 
 		return;
 	}
 
 	if (e.key === '"') {
-		closeGallery();
+		command = "cg";
 
-		refConsole.value = "";
+		consoleCommands();
+
+		return;
+	}
+
+	if (e.key === "{") {
+		command = "hg";
+
+		consoleCommands();
+
+		return;
+	}
+
+	if (e.key === "}") {
+		command = "sg";
+
+		consoleCommands();
+
+		return;
+	}
+
+	if (e.key === "L") {
+		command = "l";
+
+		consoleCommands();
 
 		return;
 	}
