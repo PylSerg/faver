@@ -932,4 +932,12 @@ document.addEventListener("keydown", (e) => {
 
 		return;
 	}
+
+	if (e.key === "?") {
+		command = "/";
+
+		consoleCommands();
+
+		return;
+	}
 });
