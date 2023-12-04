@@ -42,14 +42,12 @@ let command = "start";
 let logger = false;
 let isConsoleActive = false;
 
-const shortCommand = [">", ":", '"', "{", "}", "L"];
-
 let touchstartX = 0;
 let touchendX = 0;
 
 let refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 
-customLog("Starting Faver...");
+const shortCommand = [">", ":", '"', "{", "}", "L"];
 
 setInterval(() => {
 	shortCommand.map((cmd) => {
@@ -60,6 +58,8 @@ setInterval(() => {
 		}
 	});
 }, 1000);
+
+customLog("Starting Faver...");
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -120,7 +120,8 @@ function openAccess() {
 		}
 
 		if (GUI === "off") {
-			refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+			showConsole();
+			showLog();
 
 			focusOnConsole = setInterval(() => {
 				if (!mobile) refConsole.focus();
@@ -744,6 +745,7 @@ function runCommand() {
 
 function showLog() {
 	refConsoleLog.style.visibility = "visible";
+	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
 	logger = true;
 
