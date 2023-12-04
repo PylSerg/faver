@@ -322,6 +322,11 @@ button {
     cursor: pointer;
 
     z-index: 99;
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 70px;
+    }
 }
 
 #prev,
@@ -441,6 +446,11 @@ button {
     cursor: pointer;
 
     z-index: 99;
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 70px;
+    }
 }
 
 
