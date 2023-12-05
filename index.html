@@ -30,7 +30,7 @@
 
         <button id="zoom-button" class="zoom-button" onclick="zoomPhoto()">zoom</button>
 
-        <img id="close-gallery-button" src="close.png" onClick="closeGallery()">
+        <img id="close-gallery-button" src="close.png" onClick="runCommand('cg')">
     </div>
 
     <!-- End Gallery -->
@@ -40,7 +40,7 @@
     <div class="console-block">
         <ul id="console-log"></ul>
         <span class="console-marker">></span>
-        <input id="console" type="text" oninput="getConsoleCommand(event.currentTarget.value)">
+        <input id="console" type="text">
     </div>
 
     <!-- End console -->

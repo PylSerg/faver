@@ -114,14 +114,13 @@ function openAccess() {
 		refAccess.remove();
 
 		if (GUI === "on") {
-			hideConsole();
+			runCommand("gui on");
 
 			return;
 		}
 
 		if (GUI === "off") {
-			showConsole();
-			showLog();
+			runCommand("gui off");
 
 			focusOnConsole = setInterval(() => {
 				if (!mobile) refConsole.focus();
@@ -134,11 +133,6 @@ function openAccess() {
 	refAccessText.innerHTML = "ACCESS ALLOWED";
 	refAccessText.style.color = "#0a0";
 	refAccessText.style.borderColor = "#0a0";
-
-	if (GUI === "on") command = "gui on";
-	if (GUI === "off") command = "gui off";
-
-	runCommand();
 }
 
 function closeAccess() {
@@ -226,19 +220,17 @@ function toggleGUI() {
 		case "on":
 			GUI = "off";
 
-			command = "gui off";
+			runCommand("gui off");
 
 			break;
 
 		case "off":
 			GUI = "on";
 
-			command = "gui on";
+			runCommand("gui on");
 
 			break;
 	}
-
-	runCommand();
 }
 
 function changeGuiButton() {
@@ -475,14 +467,50 @@ function closeGallery() {
 /* 
 	Console
 */
-function getConsoleCommand(cmd) {
-	command = cmd.toLowerCase();
+
+function showLog() {
+	refConsoleLog.style.visibility = "visible";
+	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+
+	logger = true;
+
+	if (gallery === "opened") refConsole.style.backgroundColor = "#000";
 }
 
-function runCommand() {
+function hideLog() {
+	refConsoleLog.style.visibility = "hidden";
+
+	logger = false;
+
+	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
+}
+
+function showConsole() {
+	isConsoleActive = true;
+
+	refConsoleBlock.style.display = "block";
+
+	showLog();
+
+	return;
+}
+
+function hideConsole() {
+	isConsoleActive = false;
+
+	refConsoleBlock.style.display = "none";
+
+	hideLog();
+
+	return;
+}
+
+function runCommand(cmd) {
+	command = cmd;
+
 	let commandArguments = [];
 
-	commandArguments = command.split(" ");
+	commandArguments = cmd.split(" ");
 
 	const user = favorite[`USER_${commandArguments[1]}`];
 	const dUser = favorite[`${defaultUser}`];
@@ -743,43 +771,6 @@ function runCommand() {
 	refConsole.value = "";
 }
 
-function showLog() {
-	refConsoleLog.style.visibility = "visible";
-	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
-
-	logger = true;
-
-	if (gallery === "opened") refConsole.style.backgroundColor = "#000";
-}
-
-function hideLog() {
-	refConsoleLog.style.visibility = "hidden";
-
-	logger = false;
-
-	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
-}
-
-function showConsole() {
-	isConsoleActive = true;
-
-	refConsoleBlock.style.display = "block";
-
-	showLog();
-
-	return;
-}
-
-function hideConsole() {
-	isConsoleActive = false;
-
-	refConsoleBlock.style.display = "none";
-
-	hideLog();
-
-	return;
-}
-
 function customLog(info) {
 	let logColor = "";
 
@@ -833,14 +824,12 @@ refGallery.addEventListener("touchend", (e) => {
 });
 
 refConsole.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") runCommand();
+	if (e.key === "Enter") runCommand(refConsole.value);
 });
 
 document.addEventListener("auxclick", (e) => {
 	if (e.button === 1) {
-		command = "/";
-
-		runCommand();
+		runCommand("/");
 	}
 });
 
@@ -928,49 +917,37 @@ document.addEventListener("keydown", (e) => {
 	}
 
 	if (e.key === ":") {
-		command = "og";
-
-		runCommand();
+		runCommand("og");
 
 		return;
 	}
 
 	if (e.key === '"') {
-		command = "cg";
-
-		runCommand();
+		runCommand("cg");
 
 		return;
 	}
 
 	if (e.key === "{") {
-		command = "hg";
-
-		runCommand();
+		runCommand("hg");
 
 		return;
 	}
 
 	if (e.key === "}") {
-		command = "sg";
-
-		runCommand();
+		runCommand("sg");
 
 		return;
 	}
 
 	if (e.key === "L") {
-		command = "l";
-
-		runCommand();
+		runCommand("l");
 
 		return;
 	}
 
 	if (e.key === "?") {
-		command = "/";
-
-		runCommand();
+		runCommand("/");
 
 		return;
 	}
