@@ -1,7 +1,7 @@
 const SERVER = "https://script.google.com/macros/s/AKfycbywPWqsIIIRrXgy3vo1VtW8OHqOjGNtX1FSUQcpq8tGKXdvy6AaApZbArvcCV8Lw2hkNg/exec";
 let DATABASE = "";
 
-const refAccess = document.querySelector(".access");
+const refAccessBlock = document.querySelector(".access-block");
 const refAccessText = document.querySelector(".access-text");
 const refAccessInput = document.querySelector("[data-input-password]");
 
@@ -59,7 +59,7 @@ setInterval(() => {
 	});
 }, 1000);
 
-customLog("Starting Faver...", "start");
+faverLog("Starting Faver...", "start");
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -72,7 +72,7 @@ function autoSendingPassword(pass) {
 }
 
 async function checkAccess(pass) {
-	customLog(`Checking access...`, "check access");
+	faverLog(`Checking access...`, "check access");
 
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
@@ -81,11 +81,11 @@ async function checkAccess(pass) {
 		.then((data) => {
 			if (data.status === 200) {
 				currentUser = data.user;
-				customLog(`Access allowed`);
+				faverLog(`Access allowed`);
 
 				initialization(data);
 			} else {
-				customLog(`Access denied`);
+				faverLog(`Access denied`);
 
 				closeAccess();
 			}
@@ -116,7 +116,7 @@ function openAccess() {
 	refAccessText.style.borderColor = "#0a0";
 
 	setTimeout(() => {
-		refAccess.remove();
+		refAccessBlock.remove();
 
 		if (GUI === "on") {
 			runCommand("gui on");
@@ -247,34 +247,34 @@ function changeGuiButton() {
 	}
 }
 
-function stories(id) {
-	Facebook_Stories(id.fbs);
-	Instagram_Stories(id.inst);
+function openAllUserProfiles(id) {
+	openFacebookProfile(id.fbp);
+	openInstagramProfile(id.inst);
 }
 
-function profiles(id) {
-	Facebook_Profile(id.fbp);
-	Instagram_Profile(id.inst);
+function openAllUserStories(id) {
+	openFacebookStories(id.fbs);
+	openInstagramStories(id.inst);
 }
 
-function openAll(id) {
-	profiles(id);
-	stories(id);
+function openAllUserPages(id) {
+	openAllUserProfiles(id);
+	openAllUserStories(id);
 }
 
-function Facebook_Stories(id) {
+function openFacebookStories(id) {
 	if (id !== "") window.open(`https://www.facebook.com/stories/${id}?view_single=true`, "_blank");
 }
 
-function Facebook_Profile(id) {
+function openFacebookProfile(id) {
 	if (id !== "") window.open(`https://www.facebook.com/${id}`, "_blank");
 }
 
-function Instagram_Stories(id) {
+function openInstagramStories(id) {
 	if (id !== "") window.open(`https://www.instagram.com/stories/${id}`, "_blank");
 }
 
-function Instagram_Profile(id) {
+function openInstagramProfile(id) {
 	if (id !== "") window.open(`https://www.instagram.com/${id}`, "_blank");
 }
 
@@ -283,7 +283,7 @@ function Instagram_Profile(id) {
 */
 function openGallery(user) {
 	if (gallery === "opened" && activeUser === user) {
-		customLog(`W: Gallery is already open! \nUse command "sg" to show gallery.`);
+		faverLog(`W: Gallery is already open! \nUse command "sg" to show gallery.`);
 
 		return;
 	}
@@ -314,7 +314,7 @@ function openGallery(user) {
 		}
 	}
 
-	customLog(`Gallery is opened`);
+	faverLog(`Gallery is opened`);
 }
 
 function changePhoto(action) {
@@ -420,7 +420,7 @@ function zoomPhoto() {
 
 		zoom = true;
 
-		customLog(`Zoom is on`);
+		faverLog(`Zoom is on`);
 
 		return;
 	}
@@ -433,7 +433,7 @@ function zoomPhoto() {
 
 		zoom = false;
 
-		customLog(`Zoom is off`);
+		faverLog(`Zoom is off`);
 
 		return;
 	}
@@ -457,7 +457,7 @@ function closeGallery() {
 		if (!mobile) refConsole.focus();
 	}, 1000);
 
-	customLog(`Gallery is closed`);
+	faverLog(`Gallery is closed`);
 }
 
 /* 
@@ -515,7 +515,7 @@ function runCommand(cmd) {
 	switch (firstArgument) {
 		/* Opens Database */
 		case "odb":
-			customLog(`Opening database...`, cmd);
+			faverLog(`Opening database...`, cmd);
 
 			window.open(DATABASE, "_blank");
 
@@ -524,124 +524,124 @@ function runCommand(cmd) {
 		/* Opens all profiles */
 		case "oap":
 			if (secondArgument === undefined) {
-				customLog(`Opening all profiles of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening all profiles of ${dUser.NAME}...`, cmd);
 
-				profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
+				openAllUserProfiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all profiles of ${user.NAME}...`, cmd);
+			faverLog(`Opening all profiles of ${user.NAME}...`, cmd);
 
-			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
+			openAllUserProfiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
 
 			break;
 
 		/* Opens all stories */
 		case "oas":
 			if (secondArgument === undefined) {
-				customLog(`Opening all stories of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening all stories of ${dUser.NAME}...`, cmd);
 
-				stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+				openAllUserStories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all stories of ${user.NAME}...`, cmd);
+			faverLog(`Opening all stories of ${user.NAME}...`, cmd);
 
-			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
+			openAllUserStories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
 		/* Opens profile */
 		case "ofp":
 			if (secondArgument === undefined) {
-				customLog(`Opening Facebook profile of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening Facebook profile of ${dUser.NAME}...`, cmd);
 
-				Facebook_Profile(dUser.FB_PROF_ID);
+				openFacebookProfile(dUser.FB_PROF_ID);
 
 				break;
 			}
 
-			customLog(`Opening Facebook profile of ${user.NAME}...`, cmd);
+			faverLog(`Opening Facebook profile of ${user.NAME}...`, cmd);
 
-			Facebook_Profile(user.FB_PROF_ID);
+			openFacebookProfile(user.FB_PROF_ID);
 
 			break;
 
 		case "oip":
 			if (secondArgument === undefined) {
-				customLog(`Opening Instagram profile of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening Instagram profile of ${dUser.NAME}...`, cmd);
 
-				Instagram_Profile(dUser.INST_ID);
+				openInstagramProfile(dUser.INST_ID);
 
 				break;
 			}
 
-			customLog(`Opening Instagram profile of ${user.NAME}...`, cmd);
+			faverLog(`Opening Instagram profile of ${user.NAME}...`, cmd);
 
-			Instagram_Profile(user.INST_ID);
+			openInstagramProfile(user.INST_ID);
 
 			break;
 
 		/* Opens stories */
 		case "ofs":
 			if (secondArgument === undefined) {
-				customLog(`Opening Facebook stories of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening Facebook stories of ${dUser.NAME}...`, cmd);
 
-				Facebook_Stories(dUser.FB_STOR_ID);
+				openFacebookStories(dUser.FB_STOR_ID);
 
 				break;
 			}
 
-			customLog(`Opening Facebook stories of ${user.NAME}...`, cmd);
+			faverLog(`Opening Facebook stories of ${user.NAME}...`, cmd);
 
-			Facebook_Stories(user.FB_STOR_ID);
+			openFacebookStories(user.FB_STOR_ID);
 
 			break;
 
 		case "ois":
 			if (secondArgument === undefined) {
-				customLog(`Opening Instagram stories of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening Instagram stories of ${dUser.NAME}...`, cmd);
 
-				Instagram_Stories(dUser.INST_ID);
+				openInstagramStories(dUser.INST_ID);
 
 				break;
 			}
 
-			customLog(`Opening Instagram stories of ${user.NAME}...`, cmd);
+			faverLog(`Opening Instagram stories of ${user.NAME}...`, cmd);
 
-			Instagram_Stories(user.INST_ID);
+			openInstagramStories(user.INST_ID);
 
 			break;
 
 		/* Opens all */
 		case "oa":
 			if (secondArgument === undefined) {
-				customLog(`Opening all pages of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening all pages of ${dUser.NAME}...`, cmd);
 
-				openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
+				openAllUserPages({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all pages of ${user.NAME}...`, cmd);
+			faverLog(`Opening all pages of ${user.NAME}...`, cmd);
 
-			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
+			openAllUserPages({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 			break;
 
 		/* Opens gallery */
 		case "og":
 			if (secondArgument === undefined) {
-				customLog(`Opening gallery of ${dUser.NAME}...`, cmd);
+				faverLog(`Opening gallery of ${dUser.NAME}...`, cmd);
 
 				openGallery(defaultUser);
 
 				break;
 			}
 
-			customLog(`Opening gallery of ${user.NAME}...`, cmd);
+			faverLog(`Opening gallery of ${user.NAME}...`, cmd);
 
 			openGallery(`USER_${secondArgument}`);
 
@@ -649,7 +649,7 @@ function runCommand(cmd) {
 
 		/* Closes gallery */
 		case "cg":
-			customLog(`Closing gallery...`, cmd);
+			faverLog(`Closing gallery...`, cmd);
 
 			closeGallery();
 
@@ -658,14 +658,14 @@ function runCommand(cmd) {
 		/* Shows\hides gallery */
 		case "sg":
 			if (gallery === "closed") {
-				customLog(`E: Gallery is closed!`, cmd);
+				faverLog(`E: Gallery is closed!`, cmd);
 
 				break;
 			}
 
 			refGallery.style.visibility = "visible";
 
-			customLog(`Gallery is show`, cmd);
+			faverLog(`Gallery is show`, cmd);
 
 			hideLog();
 
@@ -673,14 +673,14 @@ function runCommand(cmd) {
 
 		case "hg":
 			if (gallery === "closed") {
-				customLog(`E: Gallery is closed!`, cmd);
+				faverLog(`E: Gallery is closed!`, cmd);
 
 				break;
 			}
 
 			refGallery.style.visibility = "hidden";
 
-			customLog(`Gallery is hide`, cmd);
+			faverLog(`Gallery is hide`, cmd);
 
 			showLog();
 
@@ -689,24 +689,24 @@ function runCommand(cmd) {
 		/* Shows birthday */
 		case "bd":
 			if (secondArgument === undefined) {
-				customLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`, cmd);
+				faverLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`, cmd);
 
 				break;
 			}
 
-			customLog(`Birthday of ${user.NAME}: ${user.BIRTHDAY}`, cmd);
+			faverLog(`Birthday of ${user.NAME}: ${user.BIRTHDAY}`, cmd);
 
 			break;
 
 		/* Photo quantity */
 		case "phq":
 			if (secondArgument === undefined) {
-				customLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`, cmd);
+				faverLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`, cmd);
 
 				break;
 			}
 
-			customLog(`${user.PHOTOS.length} photos of ${user.NAME}`, cmd);
+			faverLog(`${user.PHOTOS.length} photos of ${user.NAME}`, cmd);
 
 			break;
 
@@ -724,7 +724,7 @@ function runCommand(cmd) {
 
 				localStorage.setItem("GUI", "on");
 
-				customLog(`GUI is on`, cmd);
+				faverLog(`GUI is on`, cmd);
 			}
 
 			if (secondArgument === "off") {
@@ -737,7 +737,7 @@ function runCommand(cmd) {
 
 				localStorage.setItem("GUI", "off");
 
-				customLog(`GUI is off`, cmd);
+				faverLog(`GUI is off`, cmd);
 			}
 
 			break;
@@ -765,13 +765,13 @@ function runCommand(cmd) {
 			break;
 
 		default:
-			customLog(`E: Command "${cmd}" not found`, cmd);
+			faverLog(`E: Command "${cmd}" not found`, cmd);
 	}
 
 	refConsole.value = "";
 }
 
-function customLog(info, cmd) {
+function faverLog(info, cmd) {
 	if (!cmd) cmd = "";
 
 	let logColor = "";
@@ -831,43 +831,43 @@ refFavorite.addEventListener("click", (e) => {
 	}
 
 	if (action === "open-all-profiles") {
-		profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
+		openAllUserProfiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
 
 		return;
 	}
 
 	if (action === "open-instagram-profile") {
-		Instagram_Profile(user.INST_ID);
+		openInstagramProfile(user.INST_ID);
 
 		return;
 	}
 
 	if (action === "open-facebook-profile") {
-		Facebook_Profile(user.FB_PROF_ID);
+		openFacebookProfile(user.FB_PROF_ID);
 
 		return;
 	}
 
 	if (action === "open-all-stories") {
-		stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
+		openAllUserStories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 		return;
 	}
 
 	if (action === "open-instagram-stories") {
-		Instagram_Stories(user.INST_ID);
+		openInstagramStories(user.INST_ID);
 
 		return;
 	}
 
 	if (action === "open-facebook-stories") {
-		Facebook_Stories(user.FB_STOR_ID);
+		openFacebookStories(user.FB_STOR_ID);
 
 		return;
 	}
 
 	if (action === "open-all-user-pages") {
-		openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
+		openAllUserPages({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
 		return;
 	}
