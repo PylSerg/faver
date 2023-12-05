@@ -158,9 +158,6 @@ function createCards() {
 		const data = favorite[key];
 		const user = `'${key}'`;
 
-		const fbpId = `'${data.FB_PROF_ID}'`;
-		const fbsId = `'${data.FB_STOR_ID}'`;
-		const instId = `'${data.INST_ID}'`;
 		const avatar = `'${data.AVATAR}'`;
 		const description = `"Birthday: ${data.BIRTHDAY}"`;
 
