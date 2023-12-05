@@ -384,7 +384,7 @@ function showAllPhotos() {
 
 	refZoomButton.style.display = "none";
 	refAllPhotos.style.display = "flex";
-	refToggleAllPhotos.setAttribute("src", "photo.png");
+	refToggleAllPhotos.setAttribute("src", "src/images/photo.png");
 	refPhoto.style.zIndex = "1";
 
 	refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
@@ -399,7 +399,7 @@ function hideAllPhotos() {
 
 	refZoomButton.style.display = "block";
 	refAllPhotos.style.display = "none";
-	refToggleAllPhotos.setAttribute("src", "gallery.png");
+	refToggleAllPhotos.setAttribute("src", "src/images/gallery.png");
 }
 
 function toggleAllPhotos() {
