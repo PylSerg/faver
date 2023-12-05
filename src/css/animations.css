@@ -1,0 +1,46 @@
+@keyframes checking {
+
+    0% {
+        color: transparent;
+    }
+
+    50% {
+        color: var(--main-color);
+    }
+
+    100% {
+        color: transparent;
+    }
+}
+
+@keyframes error {
+    0% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    20% {
+        color: #a00;
+        border-color: #a00;
+    }
+
+    40% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    60% {
+        color: #a00;
+        border-color: #a00;
+    }
+
+    80% {
+        color: transparent;
+        border-color: transparent;
+    }
+
+    100% {
+        color: #a00;
+        border-color: #a00;
+    }
+}

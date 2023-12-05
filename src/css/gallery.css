@@ -1,0 +1,150 @@
+.gallery-block {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #000;
+
+    overflow: scroll;
+
+    z-index: 999;
+}
+
+#prev,
+#next {
+    position: fixed;
+    top: 0;
+
+    height: 95vh;
+
+    color: #555;
+    font-size: 36px;
+    font-weight: 400;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0;
+
+    padding: 30px;
+
+    cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+        display: none;
+    }
+}
+
+#prev {
+    left: 0;
+
+    text-align: left;
+}
+
+#next {
+    right: 0;
+
+    text-align: right;
+}
+
+#photo {
+    max-height: 100vh;
+
+    cursor: zoom-in;
+
+    @media screen and (max-width: 400px) {
+        width: 100vw;
+        height: max-content;
+
+        margin-bottom: 120px;
+    }
+}
+
+#toggle-all-photos {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    width: 32px;
+
+    cursor: pointer;
+
+    z-index: 99;
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 70px;
+    }
+}
+
+.zoom-button {
+    position: fixed;
+    top: 20px;
+    right: 100px;
+
+    color: #555;
+    font-size: 16px;
+
+    background-color: transparent;
+    border-color: #555;
+
+    z-index: 101;
+
+    &:hover,
+    &:focus {
+        color: #555;
+
+        background-color: transparent;
+    }
+
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.zoom-button--active {
+    color: #ccc;
+
+    background-color: var(--main-color);
+    border: var(--border);
+
+    &:hover,
+    &:focus {
+        color: #ccc;
+
+        background-color: var(--main-color);
+        border: var(--border);
+    }
+}
+
+#close-gallery-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    width: 32px;
+
+    color: #555;
+    font-size: 16px;
+    font-weight: 700;
+
+    border: 0;
+
+    cursor: pointer;
+
+    z-index: 99;
+
+    @media screen and (max-width: 400px) {
+        top: auto;
+        bottom: 70px;
+    }
+}

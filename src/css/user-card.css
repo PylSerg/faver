@@ -1,0 +1,115 @@
+/*
+    User card
+*/
+
+.user {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    padding: 30px 50px;
+
+    @media screen and (max-width: 400px) {
+        padding: 30px;
+    }
+}
+
+.user-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    cursor: default;
+
+    @media screen and (max-width: 400px) {
+        margin-bottom: 30px;
+    }
+}
+
+.user-avatar {
+    width: 86px;
+    height: 86px;
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+    background-size: cover;
+    background-position: center;
+
+    cursor: pointer;
+}
+
+.user-name {
+    display: flex;
+    align-items: center;
+
+    height: 86px;
+
+    font-size: 28px;
+
+    margin-left: 30px;
+
+    cursor: default;
+
+    @media screen and (max-width: 400px) {
+        max-width: 180px;
+    }
+}
+
+
+
+/*
+    Buttons in user card
+*/
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+
+    margin: 10px 0 10px 0;
+}
+
+.buttons-stories-block,
+.buttons-profiles-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons-stories-individually,
+.buttons-profiles-individually {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+
+    & button {
+        width: 120px;
+        height: 38px;
+
+        font-size: 16px;
+        font-weight: 400;
+
+        cursor: pointer;
+    }
+}
+
+.button-stories,
+.button-profiles,
+.button-all {
+    width: 150px;
+    height: 86px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    cursor: pointer;
+}

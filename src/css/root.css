@@ -1,0 +1,9 @@
+:root {
+    --main-background-color: #111;
+
+    --main-color: #e16804;
+    --main-font-family: Saira;
+
+    --border: 3px solid var(--main-color);
+    --border-radius: 10px;
+}
