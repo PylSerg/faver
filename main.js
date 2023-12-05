@@ -895,7 +895,7 @@ refToggleAllPhotosButton.addEventListener("click", () => toggleAllPhotos());
 
 refZoomPhotoButton.addEventListener("click", () => zoomPhoto());
 
-refCloseGalleryButton.addEventListener("click", () => runCommand("cg"));
+refCloseGalleryButton.addEventListener("click", () => closeGallery());
 
 refAllPhotos.addEventListener("click", (e) => {
 	if (!e.target.attributes.tabindex) return;
