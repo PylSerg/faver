@@ -1,7 +1,5 @@
+import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
 import createCards from "./src/js/create-cards.js";
-
-const SERVER = "https://script.google.com/macros/s/AKfycbywPWqsIIIRrXgy3vo1VtW8OHqOjGNtX1FSUQcpq8tGKXdvy6AaApZbArvcCV8Lw2hkNg/exec";
-let DATABASE = "";
 
 const refAccessBlock = document.querySelector(".access-block");
 const refAccessText = document.querySelector(".access-text");
@@ -76,7 +74,7 @@ function autoSendingPassword(pass) {
 async function checkAccess(pass) {
 	faverLog(`Checking access...`, "check access");
 
-	await fetch(`${SERVER}?pass=${pass}`)
+	await fetch(`${getServerURL()}?pass=${pass}`)
 		.then((resp) => {
 			return resp.json();
 		})
@@ -105,7 +103,7 @@ function initialization(data) {
 		}
 	});
 
-	DATABASE = data.database;
+	setDatabaseURL(data.database);
 
 	openAccess();
 }
@@ -471,7 +469,7 @@ function runCommand(cmd) {
 		case "odb":
 			faverLog(`Opening database...`, cmd);
 
-			window.open(DATABASE, "_blank");
+			window.open(getDatabaseURL(), "_blank");
 
 			break;
 
