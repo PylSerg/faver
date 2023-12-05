@@ -344,7 +344,7 @@ button {
 #photo {
     max-height: 100vh;
 
-    cursor: zoom-out;
+    cursor: zoom-in;
 
     @media screen and (max-width: 400px) {
         width: 100vw;
@@ -492,7 +492,7 @@ button {
 
     border-radius: var(--border-radius);
 
-    cursor: zoom-in;
+    cursor: pointer;
 
     &:hover,
     &:focus {

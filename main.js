@@ -33,9 +33,9 @@ let activeUser = "USER_1";
 let defaultUser = "USER_1";
 
 let gallery = "closed";
-let showAllPhoto = false;
-let photoCounter = 0;
+let isAllPhotosShow = false;
 let zoom = false;
+let photoCounter = 0;
 
 let currentUser = "guest";
 let command = "start";
@@ -284,8 +284,6 @@ function Instagram_Profile(id) {
 	Gallery
 */
 function openGallery(user) {
-	if (mobile) refPhoto.setAttribute("onClick", "zoomPhoto()");
-
 	if (gallery === "opened" && activeUser === user) {
 		customLog(`W: Gallery is already open! \n Use command "sg" to show gallery.`);
 
@@ -296,7 +294,7 @@ function openGallery(user) {
 
 	activeUser = user;
 	gallery = "opened";
-	showAllPhoto = false;
+	isAllPhotosShow = false;
 	photoCounter = 0;
 
 	isConsoleActive = false;
@@ -309,7 +307,7 @@ function openGallery(user) {
 	refConsole.style.backgroundColor = "transparent";
 	refGallery.style.display = "flex";
 
-	toggleAllPhotos();
+	showAllPhotos();
 
 	for (const key in favorite) {
 		const data = favorite[key];
@@ -358,6 +356,7 @@ function viewAllPhotos() {
 	favorite[activeUser].PHOTOS.map((photoURL) => {
 		const photoPreviewBox = document.createElement("div");
 		const photo = document.createElement("img");
+
 		photo.setAttribute("id", `photo-${favorite[activeUser].PHOTOS.indexOf(photoURL)}`);
 		photo.setAttribute("tabindex", favorite[activeUser].PHOTOS.indexOf(photoURL));
 
@@ -377,34 +376,40 @@ function selectPhoto(indx) {
 
 	refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
 
-	toggleAllPhotos();
+	hideAllPhotos();
+}
+
+function showAllPhotos() {
+	isAllPhotosShow = true;
+
+	refZoomButton.style.display = "none";
+	refAllPhotos.style.display = "flex";
+	refToggleAllPhotos.setAttribute("src", "photo.png");
+	refPhoto.style.zIndex = "1";
+
+	refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
+
+	refCurrentPhoto.focus();
+
+	if (zoom) zoomPhoto();
+}
+
+function hideAllPhotos() {
+	isAllPhotosShow = false;
+
+	refZoomButton.style.display = "block";
+	refAllPhotos.style.display = "none";
+	refToggleAllPhotos.setAttribute("src", "gallery.png");
 }
 
 function toggleAllPhotos() {
-	if (zoom) zoomPhoto();
-
-	if (!showAllPhoto) {
-		showAllPhoto = true;
-
-		refZoomButton.style.display = "none";
-		refAllPhotos.style.display = "flex";
-		refToggleAllPhotos.setAttribute("src", "photo.png");
-		refPhoto.style.zIndex = "1";
-
-		refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
-
-		refCurrentPhoto.focus();
-
+	if (!isAllPhotosShow) {
+		showAllPhotos();
 		return;
 	}
 
-	if (showAllPhoto) {
-		showAllPhoto = false;
-
-		refZoomButton.style.display = "block";
-		refAllPhotos.style.display = "none";
-		refToggleAllPhotos.setAttribute("src", "gallery.png");
-
+	if (isAllPhotosShow) {
+		hideAllPhotos();
 		return;
 	}
 }
@@ -417,8 +422,7 @@ function zoomPhoto() {
 		refPhoto.style.position = "absolute";
 		refPhoto.style.top = "0";
 		refPhoto.style.zIndex = "100";
-
-		refPhoto.setAttribute("onClick", "zoomPhoto()");
+		refPhoto.style.cursor = "zoom-out";
 
 		zoom = true;
 
@@ -429,7 +433,7 @@ function zoomPhoto() {
 
 	if (zoom) {
 		refZoomButton.setAttribute("class", "zoom-button");
-		refPhoto.setAttribute("onClick", "toggleAllPhotos()");
+		refPhoto.style.cursor = "zoom-out";
 
 		refPhoto.removeAttribute("style");
 
@@ -442,8 +446,6 @@ function zoomPhoto() {
 }
 
 function closeGallery() {
-	customLog(`Closing gallery...`);
-
 	refGallery.style.display = "none";
 	refAllPhotos.style.display = "none";
 	refConsole.style.backgroundColor = "#000";
@@ -451,7 +453,7 @@ function closeGallery() {
 	if (GUI === "off") showLog();
 
 	gallery = "closed";
-	showAllPhoto = false;
+	isAllPhotosShow = false;
 	activeUser = "";
 
 	if (zoom) zoomPhoto();
@@ -651,6 +653,8 @@ function runCommand(cmd) {
 
 		/* Closes gallery */
 		case "cg":
+			customLog(`Closing gallery...`);
+
 			closeGallery();
 
 			break;
@@ -834,31 +838,31 @@ document.addEventListener("auxclick", (e) => {
 });
 
 document.addEventListener("keydown", (e) => {
-	if (e.key === "ArrowRight" && !showAllPhoto) {
+	if (e.key === "ArrowRight" && !isAllPhotosShow) {
 		changePhoto("next");
 
 		return;
 	}
 
-	if (e.key === "ArrowLeft" && !showAllPhoto) {
+	if (e.key === "ArrowLeft" && !isAllPhotosShow) {
 		changePhoto("prev");
 
 		return;
 	}
 
-	if (e.key === "ArrowUp" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
+	if (e.key === "ArrowUp" && gallery === "opened" && !isAllPhotosShow && !isConsoleActive) {
 		zoomPhoto();
 
 		return;
 	}
 
-	if (e.key === "ArrowDown" && gallery === "opened" && !showAllPhoto && !isConsoleActive) {
-		toggleAllPhotos();
+	if ((e.key === "ArrowDown" || e.key === "Enter") && gallery === "opened" && !isAllPhotosShow && !isConsoleActive) {
+		showAllPhotos();
 
 		return;
 	}
 
-	if (e.key === "ArrowRight" && showAllPhoto) {
+	if (e.key === "ArrowRight" && isAllPhotosShow) {
 		photoCounter += 1;
 
 		if (photoCounter === favorite[activeUser].PHOTOS.length) photoCounter = 0;
@@ -869,7 +873,7 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "ArrowLeft" && showAllPhoto) {
+	if (e.key === "ArrowLeft" && isAllPhotosShow) {
 		photoCounter -= 1;
 
 		if (photoCounter < 0) photoCounter = favorite[activeUser].PHOTOS.length - 1;
@@ -880,10 +884,10 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "Enter" && showAllPhoto && !isConsoleActive) {
+	if (e.key === "Enter" && isAllPhotosShow && !isConsoleActive) {
 		refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
 
-		toggleAllPhotos();
+		hideAllPhotos();
 
 		return;
 	}
@@ -906,7 +910,7 @@ document.addEventListener("keydown", (e) => {
 
 			clearInterval(focusOnConsole);
 
-			if (showAllPhoto) {
+			if (isAllPhotosShow) {
 				refCurrentPhoto.focus();
 			} else {
 				refGallery.focus();
