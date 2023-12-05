@@ -283,14 +283,13 @@ function Instagram_Profile(id) {
 */
 function openGallery(user) {
 	if (gallery === "opened" && activeUser === user) {
-		customLog(`W: Gallery is already open! \n Use command "sg" to show gallery.`);
+		customLog(`W: Gallery is already open! \nUse command "sg" to show gallery.`);
 
 		return;
 	}
 
 	activeUser = user;
 	gallery = "opened";
-	isAllPhotosShow = false;
 	photoCounter = 0;
 
 	isConsoleActive = false;
