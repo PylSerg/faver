@@ -19,6 +19,8 @@ const refToggleAllPhotosButton = document.querySelector("[data-toggle-all-photos
 const refZoomPhotoButton = document.querySelector("[data-zoom-photo-button]");
 const refCloseGalleryButton = document.querySelector("[data-close-gallery-button]");
 
+let refCurrentPhoto = document.querySelector("[data-empty]");
+
 const refConsoleBlock = document.querySelector(".console-block");
 const refConsoleLog = document.querySelector("[data-console-log]");
 const refConsole = document.querySelector("[data-console]");
@@ -45,8 +47,6 @@ let isConsoleActive = false;
 
 let touchstartX = 0;
 let touchendX = 0;
-
-let refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
 
 const shortCommand = [">", ":", '"', "{", "}", "L"];
 
@@ -365,7 +365,6 @@ function viewAllPhotos() {
 
 		photo.setAttribute("class", "photo-preview");
 		photo.setAttribute("src", photoURL);
-		photo.setAttribute("onClick", `selectPhoto(${favorite[activeUser].PHOTOS.indexOf(photoURL)})`);
 
 		refAllPhotos.append(photoPreviewBox);
 		photoPreviewBox.append(photo);
@@ -842,6 +841,8 @@ refToggleAllPhotosButton.addEventListener("click", () => toggleAllPhotos());
 refZoomPhotoButton.addEventListener("click", () => zoomPhoto());
 
 refCloseGalleryButton.addEventListener("click", () => runCommand("cg"));
+
+refCurrentPhoto.addEventListener("click", () => selectPhoto(photoCounter));
 
 refConsole.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") runCommand(refConsole.value);
