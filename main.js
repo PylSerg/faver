@@ -41,7 +41,6 @@ let zoom = false;
 let photoCounter = 0;
 
 let currentUser = "guest";
-let command = "start";
 let logger = false;
 let isConsoleActive = false;
 
@@ -60,7 +59,7 @@ setInterval(() => {
 	});
 }, 1000);
 
-customLog("Starting Faver...");
+customLog("Starting Faver...", "start");
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
@@ -73,8 +72,7 @@ function autoSendingPassword(pass) {
 }
 
 async function checkAccess(pass) {
-	command = "check access";
-	customLog(`Checking access...`);
+	customLog(`Checking access...`, "check access");
 
 	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
@@ -289,8 +287,6 @@ function openGallery(user) {
 
 		return;
 	}
-
-	customLog(`Opening gallery of ${favorite[user].NAME}...`);
 
 	activeUser = user;
 	gallery = "opened";
@@ -507,8 +503,6 @@ function hideConsole() {
 }
 
 function runCommand(cmd) {
-	command = cmd;
-
 	let commandArguments = [];
 
 	commandArguments = cmd.split(" ");
@@ -522,7 +516,7 @@ function runCommand(cmd) {
 	switch (firstArgument) {
 		/* Opens Database */
 		case "odb":
-			customLog(`Opening database...`);
+			customLog(`Opening database...`, cmd);
 
 			window.open(DATABASE, "_blank");
 
@@ -531,14 +525,14 @@ function runCommand(cmd) {
 		/* Opens all profiles */
 		case "oap":
 			if (secondArgument === undefined) {
-				customLog(`Opening all profiles of ${dUser.NAME}...`);
+				customLog(`Opening all profiles of ${dUser.NAME}...`, cmd);
 
 				profiles({ fbp: dUser.FB_PROF_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all profiles of ${user.NAME}...`);
+			customLog(`Opening all profiles of ${user.NAME}...`, cmd);
 
 			profiles({ fbp: user.FB_PROF_ID, inst: user.INST_ID });
 
@@ -547,14 +541,14 @@ function runCommand(cmd) {
 		/* Opens all stories */
 		case "oas":
 			if (secondArgument === undefined) {
-				customLog(`Opening all stories of ${dUser.NAME}...`);
+				customLog(`Opening all stories of ${dUser.NAME}...`, cmd);
 
 				stories({ fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all stories of ${user.NAME}...`);
+			customLog(`Opening all stories of ${user.NAME}...`, cmd);
 
 			stories({ fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
@@ -563,14 +557,14 @@ function runCommand(cmd) {
 		/* Opens profile */
 		case "ofp":
 			if (secondArgument === undefined) {
-				customLog(`Opening Facebook profile of ${dUser.NAME}...`);
+				customLog(`Opening Facebook profile of ${dUser.NAME}...`, cmd);
 
 				Facebook_Profile(dUser.FB_PROF_ID);
 
 				break;
 			}
 
-			customLog(`Opening Facebook profile of ${user.NAME}...`);
+			customLog(`Opening Facebook profile of ${user.NAME}...`, cmd);
 
 			Facebook_Profile(user.FB_PROF_ID);
 
@@ -578,14 +572,14 @@ function runCommand(cmd) {
 
 		case "oip":
 			if (secondArgument === undefined) {
-				customLog(`Opening Instagram profile of ${dUser.NAME}...`);
+				customLog(`Opening Instagram profile of ${dUser.NAME}...`, cmd);
 
 				Instagram_Profile(dUser.INST_ID);
 
 				break;
 			}
 
-			customLog(`Opening Instagram profile of ${user.NAME}...`);
+			customLog(`Opening Instagram profile of ${user.NAME}...`, cmd);
 
 			Instagram_Profile(user.INST_ID);
 
@@ -594,14 +588,14 @@ function runCommand(cmd) {
 		/* Opens stories */
 		case "ofs":
 			if (secondArgument === undefined) {
-				customLog(`Opening Facebook stories of ${dUser.NAME}...`);
+				customLog(`Opening Facebook stories of ${dUser.NAME}...`, cmd);
 
 				Facebook_Stories(dUser.FB_STOR_ID);
 
 				break;
 			}
 
-			customLog(`Opening Facebook stories of ${user.NAME}...`);
+			customLog(`Opening Facebook stories of ${user.NAME}...`, cmd);
 
 			Facebook_Stories(user.FB_STOR_ID);
 
@@ -609,14 +603,14 @@ function runCommand(cmd) {
 
 		case "ois":
 			if (secondArgument === undefined) {
-				customLog(`Opening Instagram stories of ${dUser.NAME}...`);
+				customLog(`Opening Instagram stories of ${dUser.NAME}...`, cmd);
 
 				Instagram_Stories(dUser.INST_ID);
 
 				break;
 			}
 
-			customLog(`Opening Instagram stories of ${user.NAME}...`);
+			customLog(`Opening Instagram stories of ${user.NAME}...`, cmd);
 
 			Instagram_Stories(user.INST_ID);
 
@@ -625,14 +619,14 @@ function runCommand(cmd) {
 		/* Opens all */
 		case "oa":
 			if (secondArgument === undefined) {
-				customLog(`Opening all pages of ${dUser.NAME}...`);
+				customLog(`Opening all pages of ${dUser.NAME}...`, cmd);
 
 				openAll({ fbp: dUser.FB_PROF_ID, fbs: dUser.FB_STOR_ID, inst: dUser.INST_ID });
 
 				break;
 			}
 
-			customLog(`Opening all pages of ${user.NAME}...`);
+			customLog(`Opening all pages of ${user.NAME}...`, cmd);
 
 			openAll({ fbp: user.FB_PROF_ID, fbs: user.FB_STOR_ID, inst: user.INST_ID });
 
@@ -641,10 +635,14 @@ function runCommand(cmd) {
 		/* Opens gallery */
 		case "og":
 			if (secondArgument === undefined) {
+				customLog(`Opening gallery of ${dUser.NAME}...`, cmd);
+
 				openGallery(defaultUser);
 
 				break;
 			}
+
+			customLog(`Opening gallery of ${user.NAME}...`, cmd);
 
 			openGallery(`USER_${secondArgument}`);
 
@@ -652,7 +650,7 @@ function runCommand(cmd) {
 
 		/* Closes gallery */
 		case "cg":
-			customLog(`Closing gallery...`);
+			customLog(`Closing gallery...`, cmd);
 
 			closeGallery();
 
@@ -661,14 +659,14 @@ function runCommand(cmd) {
 		/* Shows\hides gallery */
 		case "sg":
 			if (gallery === "closed") {
-				customLog(`E: Gallery is closed!`);
+				customLog(`E: Gallery is closed!`, cmd);
 
 				break;
 			}
 
 			refGallery.style.visibility = "visible";
 
-			customLog(`Gallery is show`);
+			customLog(`Gallery is show`, cmd);
 
 			hideLog();
 
@@ -676,14 +674,14 @@ function runCommand(cmd) {
 
 		case "hg":
 			if (gallery === "closed") {
-				customLog(`E: Gallery is closed!`);
+				customLog(`E: Gallery is closed!`, cmd);
 
 				break;
 			}
 
 			refGallery.style.visibility = "hidden";
 
-			customLog(`Gallery is hide`);
+			customLog(`Gallery is hide`, cmd);
 
 			showLog();
 
@@ -692,24 +690,24 @@ function runCommand(cmd) {
 		/* Shows birthday */
 		case "bd":
 			if (secondArgument === undefined) {
-				customLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`);
+				customLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`, cmd);
 
 				break;
 			}
 
-			customLog(`Birthday of ${user.NAME}: ${user.BIRTHDAY}`);
+			customLog(`Birthday of ${user.NAME}: ${user.BIRTHDAY}`, cmd);
 
 			break;
 
 		/* Photo quantity */
 		case "phq":
 			if (secondArgument === undefined) {
-				customLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`);
+				customLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`, cmd);
 
 				break;
 			}
 
-			customLog(`${user.PHOTOS.length} photos of ${user.NAME}`);
+			customLog(`${user.PHOTOS.length} photos of ${user.NAME}`, cmd);
 
 			break;
 
@@ -727,7 +725,7 @@ function runCommand(cmd) {
 
 				localStorage.setItem("GUI", "on");
 
-				customLog(`GUI is on`);
+				customLog(`GUI is on`, cmd);
 			}
 
 			if (secondArgument === "off") {
@@ -740,7 +738,7 @@ function runCommand(cmd) {
 
 				localStorage.setItem("GUI", "off");
 
-				customLog(`GUI is off`);
+				customLog(`GUI is off`, cmd);
 			}
 
 			break;
@@ -768,13 +766,15 @@ function runCommand(cmd) {
 			break;
 
 		default:
-			customLog(`E: Command "${command}" not found`);
+			customLog(`E: Command "${cmd}" not found`, cmd);
 	}
 
 	refConsole.value = "";
 }
 
-function customLog(info) {
+function customLog(info, cmd) {
+	if (!cmd) cmd = "";
+
 	let logColor = "";
 
 	if (info.includes("E:") || info.includes("denied")) logColor = "style='color: #822'";
@@ -790,7 +790,7 @@ function customLog(info) {
 	const newLog = document.createElement("li");
 
 	newLog.innerHTML = `
-		<b style="color: #358">${currentUser}@faver</b>:~$ <b style="color: #883">${command}</b>
+		<b style="color: #358">${currentUser}@faver</b>:~$ <b style="color: #883">${cmd}</b>
 		<br/>
 		${logInfo}
 		<br/><br/>
@@ -800,9 +800,7 @@ function customLog(info) {
 
 	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
 
-	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${command}\x1b[0m\n\n${info}\n\n`);
-
-	command = "";
+	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
 }
 
 function checkDirection() {
