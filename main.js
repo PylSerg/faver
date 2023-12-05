@@ -1,5 +1,5 @@
 import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
-import createCards from "./src/js/create-cards.js";
+import { createCards, createCardsWithoutGUI } from "./src/js/create-cards.js";
 
 const refAccessBlock = document.querySelector(".access-block");
 const refAccessText = document.querySelector(".access-text");
@@ -147,22 +147,6 @@ function closeAccess() {
 	setTimeout(() => {
 		refAccessText.setAttribute("class", "access-text");
 	}, 1100);
-}
-
-function createCardsWithoutGUI() {
-	refFavorite.innerHTML = "";
-
-	for (const key in favorite) {
-		const data = favorite[key];
-		const user = `${key}`;
-
-		const userCard = document.createElement("li");
-		refFavorite.append(userCard);
-
-		userCard.innerHTML = `
-			${user}: ${data.NAME}
-		`;
-	}
 }
 
 function toggleGUI() {
@@ -683,7 +667,7 @@ function runCommand(cmd) {
 				GUI = "off";
 
 				changeGuiButton();
-				createCardsWithoutGUI();
+				createCardsWithoutGUI(favorite, refFavorite);
 				showConsole();
 				showLog();
 

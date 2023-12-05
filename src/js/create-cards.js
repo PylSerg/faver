@@ -1,4 +1,4 @@
-export default function createCards(favorite, refFavorite) {
+function createCards(favorite, refFavorite) {
 	refFavorite.innerHTML = "";
 
 	for (const key in favorite) {
@@ -45,3 +45,21 @@ export default function createCards(favorite, refFavorite) {
 				`;
 	}
 }
+
+function createCardsWithoutGUI(favorite, refFavorite) {
+	refFavorite.innerHTML = "";
+
+	for (const key in favorite) {
+		const data = favorite[key];
+		const user = `${key}`;
+
+		const userCard = document.createElement("li");
+		refFavorite.append(userCard);
+
+		userCard.innerHTML = `
+			${user}: ${data.NAME}
+		`;
+	}
+}
+
+export { createCards, createCardsWithoutGUI };
