@@ -1,5 +1,6 @@
 import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
 import { createCards, createCardsWithoutGUI } from "./src/js/create-cards.js";
+import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
 const refAccessText = document.querySelector(".access-text");
@@ -40,7 +41,6 @@ let isAllPhotosShow = false;
 let zoom = false;
 let photoCounter = 0;
 
-let currentUser = "guest";
 let logger = false;
 let isConsoleActive = false;
 
@@ -58,6 +58,8 @@ setInterval(() => {
 		}
 	});
 }, 1000);
+
+initRefsForFaverLog(refConsoleLog);
 
 faverLog("Starting Faver...", "start");
 
@@ -80,7 +82,8 @@ async function checkAccess(pass) {
 		})
 		.then((data) => {
 			if (data.status === 200) {
-				currentUser = data.user;
+				setUserName(data.user);
+
 				faverLog(`Access allowed`);
 
 				initialization(data);
@@ -705,37 +708,6 @@ function runCommand(cmd) {
 	}
 
 	refConsole.value = "";
-}
-
-function faverLog(info, cmd) {
-	if (!cmd) cmd = "";
-
-	let logColor = "";
-
-	if (info.includes("E:") || info.includes("denied")) logColor = "style='color: #822'";
-
-	if (info.includes("W:")) logColor = "style='color: #882'";
-
-	if (info.includes("allowed")) logColor = "style='color: #282'";
-
-	let logInfo = `
-		<span ${logColor}>${info}</span>
-	`;
-
-	const newLog = document.createElement("li");
-
-	newLog.innerHTML = `
-		<b style="color: #358">${currentUser}@faver</b>:~$ <b style="color: #883">${cmd}</b>
-		<br/>
-		${logInfo}
-		<br/><br/>
-	`;
-
-	refConsoleLog.append(newLog);
-
-	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
-
-	console.log(`\x1b[01;36m${currentUser}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
 }
 
 function checkDirection() {
