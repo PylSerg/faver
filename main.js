@@ -326,26 +326,26 @@ function changePhoto(action) {
 	if (zoom) zoomPhoto();
 
 	for (const key in favorite) {
-		const data = favorite[key];
+		const user = favorite[key];
 
 		if (key === activeUser) {
 			if (action === "prev") {
 				if (photoCounter === 0) {
-					photoCounter = data.PHOTOS.length - 1;
+					photoCounter = user.PHOTOS.length - 1;
 				} else {
 					photoCounter -= 1;
 				}
 			}
 
 			if (action === "next") {
-				if (photoCounter === data.PHOTOS.length - 1) {
+				if (photoCounter === user.PHOTOS.length - 1) {
 					photoCounter = 0;
 				} else {
 					photoCounter += 1;
 				}
 			}
 
-			refPhoto.setAttribute("src", data.PHOTOS[photoCounter]);
+			refPhoto.setAttribute("src", user.PHOTOS[photoCounter]);
 		}
 	}
 }
