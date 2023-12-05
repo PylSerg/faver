@@ -28,7 +28,7 @@
     }
 }
 
-#console-log {
+.console-log {
     position: absolute;
     left: 0;
     bottom: 30px;
@@ -53,7 +53,7 @@
     }
 }
 
-#console {
+.console {
     width: 100vw;
     height: 30px;
 

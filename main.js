@@ -3,24 +3,25 @@ let DATABASE = "";
 
 const refAccess = document.querySelector(".access");
 const refAccessText = document.querySelector(".access-text");
-const refAccessInput = document.querySelector(".access-input");
+const refAccessInput = document.querySelector("[data-input-password]");
 
-const refGuiSwitcher = document.querySelector("#gui-switcher");
+const refGuiSwitcher = document.querySelector("[data-gui-switcher]");
 
 const refFavorite = document.querySelector("#favorite");
 
 const refGallery = document.querySelector(".gallery-block");
-const refAllPhotos = document.querySelector("#all-photos");
+const refAllPhotos = document.querySelector("[data-all-photos]");
 
-const refPhoto = document.querySelector("#photo");
-const refPrev = document.querySelector("#prev");
-const refNext = document.querySelector("#next");
-const refToggleAllPhotos = document.querySelector("#toggle-all-photos");
-const refZoomButton = document.querySelector("#zoom-button");
+const refPhoto = document.querySelector("[data-photo]");
+const refPrevPhotoButton = document.querySelector("[data-prev-photo]");
+const refNextPhotoButton = document.querySelector("[data-next-photo]");
+const refToggleAllPhotosButton = document.querySelector("[data-toggle-all-photos-button]");
+const refZoomPhotoButton = document.querySelector("[data-zoom-photo-button]");
+const refCloseGalleryButton = document.querySelector("[data-close-gallery-button]");
 
 const refConsoleBlock = document.querySelector(".console-block");
-const refConsoleLog = document.querySelector("#console-log");
-const refConsole = document.querySelector("#console");
+const refConsoleLog = document.querySelector("[data-console-log]");
+const refConsole = document.querySelector("[data-console]");
 
 const favorite = {};
 
@@ -382,9 +383,9 @@ function selectPhoto(indx) {
 function showAllPhotos() {
 	isAllPhotosShow = true;
 
-	refZoomButton.style.display = "none";
+	refZoomPhotoButton.style.display = "none";
 	refAllPhotos.style.display = "flex";
-	refToggleAllPhotos.setAttribute("src", "src/images/photo.png");
+	refToggleAllPhotosButton.setAttribute("src", "src/images/photo.png");
 	refPhoto.style.zIndex = "1";
 
 	refCurrentPhoto = document.querySelector(`#photo-${photoCounter}`);
@@ -397,9 +398,9 @@ function showAllPhotos() {
 function hideAllPhotos() {
 	isAllPhotosShow = false;
 
-	refZoomButton.style.display = "block";
+	refZoomPhotoButton.style.display = "block";
 	refAllPhotos.style.display = "none";
-	refToggleAllPhotos.setAttribute("src", "src/images/gallery.png");
+	refToggleAllPhotosButton.setAttribute("src", "src/images/gallery.png");
 }
 
 function toggleAllPhotos() {
@@ -416,7 +417,7 @@ function toggleAllPhotos() {
 
 function zoomPhoto() {
 	if (!zoom) {
-		refZoomButton.setAttribute("class", "zoom-button zoom-button--active");
+		refZoomPhotoButton.setAttribute("class", "zoom-photo-button zoom-photo-button--active");
 
 		refPhoto.style.maxHeight = "10000px";
 		refPhoto.style.position = "absolute";
@@ -432,7 +433,7 @@ function zoomPhoto() {
 	}
 
 	if (zoom) {
-		refZoomButton.setAttribute("class", "zoom-button");
+		refZoomPhotoButton.setAttribute("class", "zoom-photo-button");
 		refPhoto.style.cursor = "zoom-out";
 
 		refPhoto.removeAttribute("style");
@@ -817,6 +818,10 @@ function checkDirection() {
 	Events listeners
 */
 
+refAccessInput.addEventListener("input", (e) => autoSendingPassword(e.currentTarget.value));
+
+refGuiSwitcher.addEventListener("click", () => toggleGUI());
+
 refGallery.addEventListener("touchstart", (e) => {
 	touchstartX = e.changedTouches[0].screenX;
 });
@@ -826,6 +831,17 @@ refGallery.addEventListener("touchend", (e) => {
 
 	checkDirection();
 });
+
+refPhoto.addEventListener("click", () => zoomPhoto());
+
+refPrevPhotoButton.addEventListener("click", () => changePhoto("prev"));
+refNextPhotoButton.addEventListener("click", () => changePhoto("next"));
+
+refToggleAllPhotosButton.addEventListener("click", () => toggleAllPhotos());
+
+refZoomPhotoButton.addEventListener("click", () => zoomPhoto());
+
+refCloseGalleryButton.addEventListener("click", () => runCommand("cg"));
 
 refConsole.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") runCommand(refConsole.value);

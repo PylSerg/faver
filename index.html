@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <button id="gui-switcher" onclick="toggleGUI()">GUI</button>
+    <button class="gui-switcher" data-gui-switcher>GUI</button>
 
     <ul id="favorite"></ul>
 
@@ -19,18 +19,18 @@
 
     <div class="gallery-block">
 
-        <img id="photo" src="" onClick="zoomPhoto()">
+        <img class="photo" src="" data-photo>
 
-        <button id="prev" type="button" onClick="changePhoto('prev')">&#8249;</button>
-        <button id="next" type="button" onClick="changePhoto('next')">&#8250;</button>
+        <button class="change-photo-button prev-photo" type="button" data-prev-photo>&#8249;</button>
+        <button class="change-photo-button next-photo" type="button" data-next-photo>&#8250;</button>
 
-        <div id="all-photos"></div>
+        <div class="all-photos" data-all-photos></div>
 
-        <img id="toggle-all-photos" src="src/images/photo.png" onclick="toggleAllPhotos()">
+        <img class="toggle-all-photos-button" src="src/images/photo.png" data-toggle-all-photos-button>
 
-        <button id="zoom-button" class="zoom-button" onclick="zoomPhoto()">zoom</button>
+        <button class="zoom-photo-button" data-zoom-photo-button>zoom</button>
 
-        <img id="close-gallery-button" src="src/images/close.png" onClick="runCommand('cg')">
+        <img class="close-gallery-button" src="src/images/close.png" data-close-gallery-button>
     </div>
 
     <!-- End Gallery -->
@@ -38,9 +38,9 @@
     <!-- Console -->
 
     <div class="console-block">
-        <ul id="console-log"></ul>
+        <ul class="console-log" data-console-log></ul>
         <span class="console-marker">></span>
-        <input id="console" type="text">
+        <input class="console" type="text" data-console>
     </div>
 
     <!-- End console -->
@@ -50,13 +50,12 @@
     <div class="access">
         <span class="access-text">FAVER CORP</span>
 
-        <input class="access-input" type="password" placeholder="Protected"
-            oninput="autoSendingPassword(event.currentTarget.value)" autofocus="true" />
+        <input class="access-input" type="password" placeholder="Protected" autofocus="true" data-input-password />
     </div>
 
     <!-- End access screen -->
 
-    <script src="main.js"></script>
+    <script src="main.js" type="module"></script>
 
 </body>
 

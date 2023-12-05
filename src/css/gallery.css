@@ -17,8 +17,7 @@
     z-index: 999;
 }
 
-#prev,
-#next {
+.change-photo-button {
     position: fixed;
     top: 0;
 
@@ -35,24 +34,32 @@
 
     cursor: pointer;
 
+    &:hover,
+    &:focus {
+        color: #555;
+
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 0;
+    }
+
     @media screen and (max-width: 400px) {
         display: none;
     }
 }
 
-#prev {
+.prev-photo {
     left: 0;
 
     text-align: left;
 }
 
-#next {
+.next-photo {
     right: 0;
 
     text-align: right;
 }
 
-#photo {
+.photo {
     max-height: 100vh;
 
     cursor: zoom-in;
@@ -65,7 +72,7 @@
     }
 }
 
-#toggle-all-photos {
+.toggle-all-photos-button {
     position: fixed;
     top: 20px;
     left: 20px;
@@ -82,7 +89,7 @@
     }
 }
 
-.zoom-button {
+.zoom-photo-button {
     position: fixed;
     top: 20px;
     right: 100px;
@@ -111,7 +118,7 @@
     }
 }
 
-.zoom-button--active {
+.zoom-photo-button--active {
     color: #ccc;
 
     background-color: var(--main-color);
@@ -126,7 +133,7 @@
     }
 }
 
-#close-gallery-button {
+.close-gallery-button {
     position: fixed;
     top: 20px;
     right: 20px;
