@@ -110,6 +110,12 @@ function initialization(data) {
 }
 
 function openAccess() {
+	refAccessInput.remove();
+
+	refAccessText.innerHTML = "ACCESS ALLOWED";
+	refAccessText.style.color = "#0a0";
+	refAccessText.style.borderColor = "#0a0";
+
 	setTimeout(() => {
 		refAccess.remove();
 
@@ -127,12 +133,6 @@ function openAccess() {
 			}, 1000);
 		}
 	}, 1000);
-
-	refAccessInput.remove();
-
-	refAccessText.innerHTML = "ACCESS ALLOWED";
-	refAccessText.style.color = "#0a0";
-	refAccessText.style.borderColor = "#0a0";
 }
 
 function closeAccess() {
