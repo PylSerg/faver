@@ -1,4 +1,10 @@
-function createCards(favorite, refFavorite) {
+let refFavorite;
+
+function initRefsForCardsCreator(Favorite) {
+	refFavorite = Favorite;
+}
+
+function createCards(favorite) {
 	refFavorite.innerHTML = "";
 
 	for (const key in favorite) {
@@ -46,7 +52,7 @@ function createCards(favorite, refFavorite) {
 	}
 }
 
-function createCardsWithoutGUI(favorite, refFavorite) {
+function createCardsWithoutGUI(favorite) {
 	refFavorite.innerHTML = "";
 
 	for (const key in favorite) {
@@ -62,4 +68,4 @@ function createCardsWithoutGUI(favorite, refFavorite) {
 	}
 }
 
-export { createCards, createCardsWithoutGUI };
+export { createCards, createCardsWithoutGUI, initRefsForCardsCreator };

@@ -1,5 +1,5 @@
 import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
-import { createCards, createCardsWithoutGUI } from "./src/js/create-cards.js";
+import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
@@ -105,6 +105,8 @@ function initialization(data) {
 			}
 		}
 	});
+
+	initRefsForCardsCreator(refFavorite);
 
 	setDatabaseURL(data.database);
 
@@ -657,7 +659,7 @@ function runCommand(cmd) {
 				GUI = "on";
 
 				changeGuiButton();
-				createCards(favorite, refFavorite);
+				createCards(favorite);
 				hideLog();
 				hideConsole();
 
@@ -670,7 +672,7 @@ function runCommand(cmd) {
 				GUI = "off";
 
 				changeGuiButton();
-				createCardsWithoutGUI(favorite, refFavorite);
+				createCardsWithoutGUI(favorite);
 				showConsole();
 				showLog();
 
