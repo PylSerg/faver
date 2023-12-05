@@ -900,7 +900,11 @@ refZoomPhotoButton.addEventListener("click", () => zoomPhoto());
 
 refCloseGalleryButton.addEventListener("click", () => runCommand("cg"));
 
-refCurrentPhoto.addEventListener("click", () => selectPhoto(photoCounter));
+refAllPhotos.addEventListener("click", (e) => {
+	if (!e.target.attributes.tabindex) return;
+
+	selectPhoto(Number(e.target.attributes.tabindex.value));
+});
 
 refConsole.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") runCommand(refConsole.value);
