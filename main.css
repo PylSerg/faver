@@ -1,5 +1,21 @@
+/* 
+    Root
+*/
 @import "src/css/root.css";
 
+
+
+/*
+    Elements
+*/
+@import "src/css/body.css";
+@import "src/css/buttons.css";
+
+
+
+/*
+    Classes and identifiers
+*/
 @import "src/css/access-screen.css";
 @import "src/css/gui.css";
 @import "src/css/favorite.css";
@@ -8,35 +24,9 @@
 @import "src/css/all-photos.css";
 @import "src/css/console.css";
 
+
+
+/*
+    Animation
+*/
 @import "src/css/animations.css";
-
-
-body {
-    background-color: var(--main-background-color);
-
-    color: var(--main-color);
-    font-family: var(--main-font-family);
-    letter-spacing: 2px;
-
-    margin: 0;
-    padding: 10px;
-    padding-bottom: 50px;
-}
-
-button {
-    color: var(--main-color);
-    font-family: var(--main-font-family);
-    letter-spacing: 2px;
-
-    background-color: var(--main-background-color);
-    border: var(--border);
-    border-radius: var(--border-radius);
-
-    cursor: pointer;
-
-    &:hover,
-    &:focus {
-        color: #ccc;
-        background-color: var(--main-color);
-    }
-}

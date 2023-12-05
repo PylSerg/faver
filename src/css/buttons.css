@@ -1,0 +1,17 @@
+button {
+    color: var(--main-color);
+    font-family: var(--main-font-family);
+    letter-spacing: 2px;
+
+    background-color: var(--main-background-color);
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        color: #ccc;
+        background-color: var(--main-color);
+    }
+}
