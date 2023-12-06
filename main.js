@@ -1,5 +1,6 @@
 import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
 import { openAccess, initRefsForOpenAccess, exportToOpenAccess } from "./src/js/open-access.js";
+import { closeAccess, initRefsForCloseAccess } from "./src/js/close-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
@@ -61,6 +62,7 @@ setInterval(() => {
 }, 1000);
 
 initRefsForFaverLog(refConsoleLog);
+initRefsForCloseAccess(refAccessText, refAccessInput);
 
 faverLog("Starting Faver...", "start");
 
@@ -107,10 +109,10 @@ function initialization(data) {
 		}
 	});
 
+	setDatabaseURL(data.database);
+
 	initRefsForCardsCreator(refFavorite);
 	initRefsForOpenAccess(refAccessInput, refAccessText, refAccessBlock, refConsole);
-
-	setDatabaseURL(data.database);
 
 	exporter();
 
@@ -119,21 +121,6 @@ function initialization(data) {
 
 function exporter() {
 	exportToOpenAccess(GUI, mobile, focusOnConsole, runCommand);
-}
-
-function closeAccess() {
-	refAccessText.innerHTML = "ACCESS DENIED";
-	refAccessText.style.color = "#a00";
-	refAccessText.style.borderColor = "#a00";
-	refAccessText.setAttribute("class", "access-text access-text--error");
-
-	refAccessInput.setAttribute("type", "password");
-	refAccessInput.setAttribute("class", "access-input");
-	refAccessInput.value = "";
-
-	setTimeout(() => {
-		refAccessText.setAttribute("class", "access-text");
-	}, 1100);
 }
 
 function toggleGUI() {
