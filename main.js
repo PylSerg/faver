@@ -4,6 +4,7 @@ import { closeAccess, initRefsForCloseAccess } from "./src/js/close-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
 import { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI } from "./src/js/toggle-gui.js";
 import { openAllUserProfiles, openAllUserStories, openAllUserPages, openFacebookStories, openFacebookProfile, openInstagramStories, openInstagramProfile } from "./src/js/open-user-pages.js";
+import { clearConsoleLineFromKeyShortcuts, initRefsForConsoleLineCleaner } from "./src/js/key-shortcuts.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
@@ -51,20 +52,11 @@ let isConsoleActive = false;
 let touchstartX = 0;
 let touchendX = 0;
 
-const shortCommand = [">", ":", '"', "{", "}", "L"];
-
-setInterval(() => {
-	shortCommand.map((cmd) => {
-		if (refConsole.value === cmd) {
-			refConsole.value = "";
-
-			return;
-		}
-	});
-}, 1000);
-
 initRefsForFaverLog(refConsoleLog);
+initRefsForConsoleLineCleaner(refConsole);
 initRefsForCloseAccess(refAccessText, refAccessInput);
+
+clearConsoleLineFromKeyShortcuts();
 
 faverLog("Starting Faver...", "start");
 
@@ -117,14 +109,10 @@ function initialization(data) {
 	initRefsForOpenAccess(refAccessInput, refAccessText, refAccessBlock, refConsole);
 	initRefsForChangeGuiButton(refGuiSwitcher);
 
-	exporter();
-
-	openAccess();
-}
-
-function exporter() {
 	exportToOpenAccess(GUI, mobile, focusOnConsole, runCommand);
 	exportToToggleGUI(GUI, runCommand);
+
+	openAccess();
 }
 
 /*
