@@ -7,6 +7,7 @@ import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./s
 import { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI } from "./src/js/toggle-gui.js";
 import { openAllUserProfiles, openAllUserStories, openAllUserPages, openFacebookStories, openFacebookProfile, openInstagramStories, openInstagramProfile } from "./src/js/open-user-pages.js";
 import { clearConsoleLineFromKeyShortcuts, initRefsForConsoleLineCleaner } from "./src/js/key-shortcuts.js";
+import { showLog, hideLog, showConsole, hideConsole, initRefsForConsoleController, exportToConsoleController } from "./src/js/console-controller.js";
 import { faverLog, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
@@ -48,18 +49,26 @@ let isAllPhotosShow = false;
 let zoom = false;
 let photoCounter = 0;
 
-let logger = false;
-let isConsoleActive = false;
-
 let touchstartX = 0;
 let touchendX = 0;
 
+const state = {
+	isLoggerActive: false,
+	isConsoleActive: false,
+};
+
+function setState(key, value) {
+	state[`${key}`] = value;
+}
+
 initRefsForAutoSendingPassword(refAccessInput);
+initRefsForCloseAccess(refAccessText, refAccessInput);
 initRefsForFaverLog(refConsoleLog);
 initRefsForConsoleLineCleaner(refConsole);
-initRefsForCloseAccess(refAccessText, refAccessInput);
+initRefsForConsoleController(refConsoleLog, refConsole, refConsoleBlock);
 
 exportToCheckAccess(initialization);
+exportToConsoleController(gallery, setState);
 
 clearConsoleLineFromKeyShortcuts();
 
@@ -102,7 +111,7 @@ function openGallery(user) {
 	gallery = "opened";
 	photoCounter = 0;
 
-	isConsoleActive = false;
+	state.isConsoleActive = false;
 	clearInterval(focusOnConsole);
 
 	hideLog();
@@ -262,7 +271,7 @@ function closeGallery() {
 
 	if (zoom) zoomPhoto();
 
-	isConsoleActive = true;
+	state.isConsoleActive = true;
 	focusOnConsole = setInterval(() => {
 		if (!mobile) refConsole.focus();
 	}, 1000);
@@ -271,45 +280,8 @@ function closeGallery() {
 }
 
 /* 
-	Console
+	Commands list
 */
-
-function showLog() {
-	refConsoleLog.style.visibility = "visible";
-	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
-
-	logger = true;
-
-	if (gallery === "opened") refConsole.style.backgroundColor = "#000";
-}
-
-function hideLog() {
-	refConsoleLog.style.visibility = "hidden";
-
-	logger = false;
-
-	if (gallery === "opened") refConsole.style.backgroundColor = "transparent";
-}
-
-function showConsole() {
-	isConsoleActive = true;
-
-	refConsoleBlock.style.display = "block";
-
-	showLog();
-
-	return;
-}
-
-function hideConsole() {
-	isConsoleActive = false;
-
-	refConsoleBlock.style.display = "none";
-
-	hideLog();
-
-	return;
-}
 
 function runCommand(cmd) {
 	let commandArguments = [];
@@ -569,7 +541,7 @@ function runCommand(cmd) {
 		// Hides\shows log
 		case "toggle-log":
 		case "l":
-			if (!logger) {
+			if (!state.isLoggerActive) {
 				showLog();
 			} else {
 				hideLog();
@@ -719,13 +691,13 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "ArrowUp" && gallery === "opened" && !isAllPhotosShow && !isConsoleActive) {
+	if (e.key === "ArrowUp" && gallery === "opened" && !isAllPhotosShow && !state.isConsoleActive) {
 		zoomPhoto();
 
 		return;
 	}
 
-	if ((e.key === "ArrowDown" || e.key === "Enter") && gallery === "opened" && !isAllPhotosShow && !isConsoleActive) {
+	if ((e.key === "ArrowDown" || e.key === "Enter") && gallery === "opened" && !isAllPhotosShow && !state.isConsoleActive) {
 		showAllPhotos();
 
 		return;
@@ -753,7 +725,7 @@ document.addEventListener("keydown", (e) => {
 		return;
 	}
 
-	if (e.key === "Enter" && isAllPhotosShow && !isConsoleActive) {
+	if (e.key === "Enter" && isAllPhotosShow && !state.isConsoleActive) {
 		refPhoto.setAttribute("src", favorite[activeUser].PHOTOS[photoCounter]);
 
 		hideAllPhotos();
@@ -762,8 +734,8 @@ document.addEventListener("keydown", (e) => {
 	}
 
 	if (e.key === ">") {
-		if (!isConsoleActive) {
-			isConsoleActive = true;
+		if (!state.isConsoleActive) {
+			state.isConsoleActive = true;
 
 			showConsole();
 
@@ -773,7 +745,7 @@ document.addEventListener("keydown", (e) => {
 
 			return;
 		} else {
-			isConsoleActive = false;
+			state.isConsoleActive = false;
 
 			hideConsole();
 
