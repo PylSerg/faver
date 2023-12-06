@@ -2,6 +2,7 @@ import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
 import { openAccess, initRefsForOpenAccess, exportToOpenAccess } from "./src/js/open-access.js";
 import { closeAccess, initRefsForCloseAccess } from "./src/js/close-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
+import { toggleGUI, exportToToggleGUI } from "./src/js/toggle-gui.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
@@ -121,24 +122,7 @@ function initialization(data) {
 
 function exporter() {
 	exportToOpenAccess(GUI, mobile, focusOnConsole, runCommand);
-}
-
-function toggleGUI() {
-	switch (GUI) {
-		case "on":
-			GUI = "off";
-
-			runCommand("gui off");
-
-			break;
-
-		case "off":
-			GUI = "on";
-
-			runCommand("gui on");
-
-			break;
-	}
+	exportToToggleGUI(GUI, runCommand);
 }
 
 function changeGuiButton() {
