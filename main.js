@@ -1,4 +1,5 @@
 import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
+import { openAccess, initRefsForOpenAccess, exportToOpenAccess } from "./src/js/open-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
@@ -107,36 +108,17 @@ function initialization(data) {
 	});
 
 	initRefsForCardsCreator(refFavorite);
+	initRefsForOpenAccess(refAccessInput, refAccessText, refAccessBlock, refConsole);
 
 	setDatabaseURL(data.database);
+
+	exporter();
 
 	openAccess();
 }
 
-function openAccess() {
-	refAccessInput.remove();
-
-	refAccessText.innerHTML = "ACCESS ALLOWED";
-	refAccessText.style.color = "#0a0";
-	refAccessText.style.borderColor = "#0a0";
-
-	setTimeout(() => {
-		refAccessBlock.remove();
-
-		if (GUI === "on") {
-			runCommand("gui on");
-
-			return;
-		}
-
-		if (GUI === "off") {
-			runCommand("gui off");
-
-			focusOnConsole = setInterval(() => {
-				if (!mobile) refConsole.focus();
-			}, 1000);
-		}
-	}, 1000);
+function exporter() {
+	exportToOpenAccess(GUI, mobile, focusOnConsole, runCommand);
 }
 
 function closeAccess() {
