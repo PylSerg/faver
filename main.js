@@ -324,6 +324,7 @@ function runCommand(cmd) {
 
 	switch (firstArgument) {
 		/* Opens Database */
+		case "open-database":
 		case "odb":
 			faverLog(`Opening database...`, cmd);
 
@@ -332,6 +333,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens all profiles */
+		case "open-all-profiles":
 		case "oap":
 			if (secondArgument === undefined) {
 				faverLog(`Opening all profiles of ${dUser.NAME}...`, cmd);
@@ -348,6 +350,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens all stories */
+		case "open-all-stories":
 		case "oas":
 			if (secondArgument === undefined) {
 				faverLog(`Opening all stories of ${dUser.NAME}...`, cmd);
@@ -364,6 +367,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens profile */
+		case "open-facebook-profile":
 		case "ofp":
 			if (secondArgument === undefined) {
 				faverLog(`Opening Facebook profile of ${dUser.NAME}...`, cmd);
@@ -379,6 +383,7 @@ function runCommand(cmd) {
 
 			break;
 
+		case "open-instagram-profile":
 		case "oip":
 			if (secondArgument === undefined) {
 				faverLog(`Opening Instagram profile of ${dUser.NAME}...`, cmd);
@@ -395,6 +400,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens stories */
+		case "open-facebook-stories":
 		case "ofs":
 			if (secondArgument === undefined) {
 				faverLog(`Opening Facebook stories of ${dUser.NAME}...`, cmd);
@@ -410,6 +416,7 @@ function runCommand(cmd) {
 
 			break;
 
+		case "open-instagram-stories":
 		case "ois":
 			if (secondArgument === undefined) {
 				faverLog(`Opening Instagram stories of ${dUser.NAME}...`, cmd);
@@ -426,6 +433,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens all */
+		case "open-all-user-pages":
 		case "oa":
 			if (secondArgument === undefined) {
 				faverLog(`Opening all pages of ${dUser.NAME}...`, cmd);
@@ -442,6 +450,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Opens gallery */
+		case "open-gallery":
 		case "og":
 			if (secondArgument === undefined) {
 				faverLog(`Opening gallery of ${dUser.NAME}...`, cmd);
@@ -458,6 +467,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Closes gallery */
+		case "close-gallery":
 		case "cg":
 			faverLog(`Closing gallery...`, cmd);
 
@@ -466,6 +476,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Shows\hides gallery */
+		case "show-gallery":
 		case "sg":
 			if (gallery === "closed") {
 				faverLog(`E: Gallery is closed!`, cmd);
@@ -481,6 +492,7 @@ function runCommand(cmd) {
 
 			break;
 
+		case "hide-gallery":
 		case "hg":
 			if (gallery === "closed") {
 				faverLog(`E: Gallery is closed!`, cmd);
@@ -497,6 +509,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Shows birthday */
+		case "print-user-birthday":
 		case "bd":
 			if (secondArgument === undefined) {
 				faverLog(`Birthday of ${dUser.NAME}: ${dUser.BIRTHDAY}`, cmd);
@@ -509,6 +522,7 @@ function runCommand(cmd) {
 			break;
 
 		/* Photo quantity */
+		case "print-photo-quantity":
 		case "phq":
 			if (secondArgument === undefined) {
 				faverLog(`${dUser.PHOTOS.length} photos of ${dUser.NAME}`, cmd);
@@ -553,6 +567,7 @@ function runCommand(cmd) {
 			break;
 
 		// Hides\shows log
+		case "toggle-log":
 		case "l":
 			if (!logger) {
 				showLog();
@@ -562,13 +577,15 @@ function runCommand(cmd) {
 
 			break;
 
-		// Clears log list
+		// Clears log
+		case "clear-log":
 		case "c":
 			refConsoleLog.innerHTML = "";
 
 			break;
 
 		// Exit
+		case "exit":
 		case "/":
 			location.reload();
 
