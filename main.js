@@ -1,11 +1,13 @@
-import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
+import { autoSendingPassword, initRefsForAutoSendingPassword } from "./src/js/auto-sending-password.js";
+import { getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
+import { exportToCheckAccess } from "./src/js/check-access.js";
 import { openAccess, initRefsForOpenAccess, exportToOpenAccess } from "./src/js/open-access.js";
-import { closeAccess, initRefsForCloseAccess } from "./src/js/close-access.js";
+import { initRefsForCloseAccess } from "./src/js/close-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
 import { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI } from "./src/js/toggle-gui.js";
 import { openAllUserProfiles, openAllUserStories, openAllUserPages, openFacebookStories, openFacebookProfile, openInstagramStories, openInstagramProfile } from "./src/js/open-user-pages.js";
 import { clearConsoleLineFromKeyShortcuts, initRefsForConsoleLineCleaner } from "./src/js/key-shortcuts.js";
-import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
+import { faverLog, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
 const refAccessText = document.querySelector(".access-text");
@@ -52,45 +54,16 @@ let isConsoleActive = false;
 let touchstartX = 0;
 let touchendX = 0;
 
+initRefsForAutoSendingPassword(refAccessInput);
 initRefsForFaverLog(refConsoleLog);
 initRefsForConsoleLineCleaner(refConsole);
 initRefsForCloseAccess(refAccessText, refAccessInput);
 
+exportToCheckAccess(initialization);
+
 clearConsoleLineFromKeyShortcuts();
 
 faverLog("Starting Faver...", "start");
-
-function autoSendingPassword(pass) {
-	if (pass.length >= 4) {
-		refAccessInput.value = "CHECKING ACCESS...";
-		refAccessInput.setAttribute("type", "text");
-		refAccessInput.setAttribute("class", "access-input checking");
-
-		checkAccess(pass);
-	}
-}
-
-async function checkAccess(pass) {
-	faverLog(`Checking access...`, "check access");
-
-	await fetch(`${getServerURL()}?pass=${pass}`)
-		.then((resp) => {
-			return resp.json();
-		})
-		.then((data) => {
-			if (data.status === 200) {
-				setUserName(data.user);
-
-				faverLog(`Access allowed`);
-
-				initialization(data);
-			} else {
-				faverLog(`Access denied`);
-
-				closeAccess();
-			}
-		});
-}
 
 function initialization(data) {
 	data.data.map((user) => {
