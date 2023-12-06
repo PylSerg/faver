@@ -1,5 +1,11 @@
+let refGuiSwitcher;
+
 let GUI;
 let runCommand;
+
+function initRefsForChangeGuiButton(GuiSwitcher) {
+	refGuiSwitcher = GuiSwitcher;
+}
 
 function exportToToggleGUI(statusGUI, runCommandFunction) {
 	GUI = statusGUI;
@@ -24,4 +30,20 @@ function toggleGUI() {
 	}
 }
 
-export { toggleGUI, exportToToggleGUI };
+function changeGuiButton() {
+	switch (GUI) {
+		case "on":
+			refGuiSwitcher.style.color = "#ccc";
+			refGuiSwitcher.style.backgroundColor = "var(--main-color)";
+
+			break;
+
+		case "off":
+			refGuiSwitcher.style.color = "var(--main-color)";
+			refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
+
+			break;
+	}
+}
+
+export { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI };

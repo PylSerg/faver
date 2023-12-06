@@ -2,7 +2,7 @@ import { getServerURL, getDatabaseURL, setDatabaseURL } from "./src/js/urls.js";
 import { openAccess, initRefsForOpenAccess, exportToOpenAccess } from "./src/js/open-access.js";
 import { closeAccess, initRefsForCloseAccess } from "./src/js/close-access.js";
 import { createCards, createCardsWithoutGUI, initRefsForCardsCreator } from "./src/js/create-cards.js";
-import { toggleGUI, exportToToggleGUI } from "./src/js/toggle-gui.js";
+import { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI } from "./src/js/toggle-gui.js";
 import { faverLog, setUserName, initRefsForFaverLog } from "./src/js/faver-log.js";
 
 const refAccessBlock = document.querySelector(".access-block");
@@ -114,6 +114,7 @@ function initialization(data) {
 
 	initRefsForCardsCreator(refFavorite);
 	initRefsForOpenAccess(refAccessInput, refAccessText, refAccessBlock, refConsole);
+	initRefsForChangeGuiButton(refGuiSwitcher);
 
 	exporter();
 
@@ -123,22 +124,6 @@ function initialization(data) {
 function exporter() {
 	exportToOpenAccess(GUI, mobile, focusOnConsole, runCommand);
 	exportToToggleGUI(GUI, runCommand);
-}
-
-function changeGuiButton() {
-	switch (GUI) {
-		case "on":
-			refGuiSwitcher.style.color = "#ccc";
-			refGuiSwitcher.style.backgroundColor = "var(--main-color)";
-
-			break;
-
-		case "off":
-			refGuiSwitcher.style.color = "var(--main-color)";
-			refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
-
-			break;
-	}
 }
 
 function openAllUserProfiles(id) {
