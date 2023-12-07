@@ -32,7 +32,7 @@ const refs = {
 
 	gallery: document.querySelector(".gallery-block"),
 	allPhotos: document.querySelector("[data-all-photos]"),
-	currentPhoto: document.querySelector("[data-empty]"),
+	currentPhoto: document.querySelector("body"),
 	photo: document.querySelector("[data-photo]"),
 	prevPhotoButton: document.querySelector("[data-prev-photo]"),
 	nextPhotoButton: document.querySelector("[data-next-photo]"),
