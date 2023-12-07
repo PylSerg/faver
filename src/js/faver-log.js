@@ -9,7 +9,7 @@ function faverLog(info, cmd) {
 
 	if (info.includes("W:")) logColor = "style='color: #882'";
 
-	if (info.includes("allowed")) logColor = "style='color: #282'";
+	if (info.includes("allowed") || info.includes("successfully")) logColor = "style='color: #282'";
 
 	let logInfo = `
 		<span ${logColor}>${info}</span>
