@@ -1,19 +1,14 @@
+import { refs } from "./state.js";
 import { checkAccess } from "./check-access.js";
-
-let refAccessInput;
-
-function initRefsForAutoSendingPassword(AccessInput) {
-	refAccessInput = AccessInput;
-}
 
 function autoSendingPassword(pass) {
 	if (pass.length >= 4) {
-		refAccessInput.value = "CHECKING ACCESS...";
-		refAccessInput.setAttribute("type", "text");
-		refAccessInput.setAttribute("class", "access-input checking");
+		refs.accessInput.value = "CHECKING ACCESS...";
+		refs.accessInput.setAttribute("type", "text");
+		refs.accessInput.setAttribute("class", "access-input checking");
 
 		checkAccess(pass);
 	}
 }
 
-export { autoSendingPassword, initRefsForAutoSendingPassword };
+export { autoSendingPassword };

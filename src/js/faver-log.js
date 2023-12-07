@@ -1,13 +1,4 @@
-let userName = "guest";
-let refConsoleLog;
-
-function initRefsForFaverLog(ConsoleLog) {
-	refConsoleLog = ConsoleLog;
-}
-
-function setUserName(name) {
-	userName = name;
-}
+import { state, refs } from "./state.js";
 
 function faverLog(info, cmd) {
 	if (!cmd) cmd = "";
@@ -27,17 +18,17 @@ function faverLog(info, cmd) {
 	const newLog = document.createElement("li");
 
 	newLog.innerHTML = `
-		<b style="color: #358">${userName}@faver</b>:~$ <b style="color: #883">${cmd}</b>
+		<b style="color: #358">${state.userName}@faver</b>:~$ <b style="color: #883">${cmd}</b>
 		<br/>
 		${logInfo}
 		<br/><br/>
 	`;
 
-	refConsoleLog.append(newLog);
+	refs.consoleLog.append(newLog);
 
-	refConsoleLog.scrollTop = refConsoleLog.scrollHeight;
+	refs.consoleLog.scrollTop = refs.consoleLog.scrollHeight;
 
-	console.log(`\x1b[01;36m${userName}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
+	console.log(`\x1b[01;36m${state.userName}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
 }
 
-export { faverLog, setUserName, initRefsForFaverLog };
+export { faverLog };

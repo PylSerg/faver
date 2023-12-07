@@ -1,27 +1,27 @@
-import { faverLog, setUserName } from "./faver-log.js";
-import { getServerURL } from "./urls.js";
-import { closeAccess } from "./close-access.js";
-
-let initialization;
-
-function exportToCheckAccess(initializationFunction) {
-	initialization = initializationFunction;
-}
+import { setFavorite, setState } from "./state.js";
+import { faverLog } from "./faver-log.js";
+import { SERVER, setDatabaseURL } from "./urls.js";
+import { openAccess, closeAccess } from "./access.js";
 
 async function checkAccess(pass) {
 	faverLog(`Checking access...`, "check access");
 
-	await fetch(`${getServerURL()}?pass=${pass}`)
+	await fetch(`${SERVER}?pass=${pass}`)
 		.then((resp) => {
 			return resp.json();
 		})
 		.then((data) => {
 			if (data.status === 200) {
-				setUserName(data.user);
-
 				faverLog(`Access allowed`);
+				faverLog(`Initialization...`);
 
-				initialization(data);
+				setState("userName", data.user);
+
+				setFavorite(data);
+
+				setDatabaseURL(data.database);
+
+				openAccess();
 			} else {
 				faverLog(`Access denied`);
 
@@ -30,4 +30,4 @@ async function checkAccess(pass) {
 		});
 }
 
-export { checkAccess, exportToCheckAccess };
+export { checkAccess };

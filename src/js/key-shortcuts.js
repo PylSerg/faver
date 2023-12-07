@@ -1,16 +1,12 @@
+import { refs } from "./state.js";
+
 const keyShortcuts = [">", ":", '"', "{", "}", "L"];
-
-let refConsole;
-
-function initRefsForConsoleLineCleaner(Console) {
-	refConsole = Console;
-}
 
 function clearConsoleLineFromKeyShortcuts() {
 	setInterval(() => {
 		keyShortcuts.map((cmd) => {
-			if (refConsole.value === cmd) {
-				refConsole.value = "";
+			if (refs.console.value === cmd) {
+				refs.console.value = "";
 
 				return;
 			}
@@ -18,4 +14,4 @@ function clearConsoleLineFromKeyShortcuts() {
 	}, 1000);
 }
 
-export { clearConsoleLineFromKeyShortcuts, initRefsForConsoleLineCleaner };
+export { clearConsoleLineFromKeyShortcuts };

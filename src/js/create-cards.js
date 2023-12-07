@@ -1,11 +1,7 @@
-let refFavorite;
+import { refs, favorite } from "./state.js";
 
-function initRefsForCardsCreator(Favorite) {
-	refFavorite = Favorite;
-}
-
-function createCards(favorite) {
-	refFavorite.innerHTML = "";
+function createCards() {
+	refs.favorite.innerHTML = "";
 
 	for (const key in favorite) {
 		const data = favorite[key];
@@ -18,7 +14,7 @@ function createCards(favorite) {
 
 		userCard.setAttribute("class", "user");
 
-		refFavorite.append(userCard);
+		refs.favorite.append(userCard);
 
 		userCard.innerHTML = `
 					<div class="user-title">
@@ -52,15 +48,15 @@ function createCards(favorite) {
 	}
 }
 
-function createCardsWithoutGUI(favorite) {
-	refFavorite.innerHTML = "";
+function createCardsWithoutGUI() {
+	refs.favorite.innerHTML = "";
 
 	for (const key in favorite) {
 		const data = favorite[key];
 		const user = `${key}`;
 
 		const userCard = document.createElement("li");
-		refFavorite.append(userCard);
+		refs.favorite.append(userCard);
 
 		userCard.innerHTML = `
 			${user}: ${data.NAME}
@@ -68,4 +64,4 @@ function createCardsWithoutGUI(favorite) {
 	}
 }
 
-export { createCards, createCardsWithoutGUI, initRefsForCardsCreator };
+export { createCards, createCardsWithoutGUI };

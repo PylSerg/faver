@@ -1,28 +1,17 @@
-let refGuiSwitcher;
-
-let GUI;
-let runCommand;
-
-function initRefsForChangeGuiButton(GuiSwitcher) {
-	refGuiSwitcher = GuiSwitcher;
-}
-
-function exportToToggleGUI(statusGUI, runCommandFunction) {
-	GUI = statusGUI;
-	runCommand = runCommandFunction;
-}
+import { state, refs, setState } from "./state.js";
+import { runCommand } from "./run-command.js";
 
 function toggleGUI() {
-	switch (GUI) {
+	switch (state.GUI) {
 		case "on":
-			GUI = "off";
+			setState("GUI", "off");
 
 			runCommand("gui off");
 
 			break;
 
 		case "off":
-			GUI = "on";
+			setState("GUI", "on");
 
 			runCommand("gui on");
 
@@ -31,19 +20,19 @@ function toggleGUI() {
 }
 
 function changeGuiButton() {
-	switch (GUI) {
+	switch (state.GUI) {
 		case "on":
-			refGuiSwitcher.style.color = "#ccc";
-			refGuiSwitcher.style.backgroundColor = "var(--main-color)";
+			refs.guiSwitcher.style.color = "#ccc";
+			refs.guiSwitcher.style.backgroundColor = "var(--main-color)";
 
 			break;
 
 		case "off":
-			refGuiSwitcher.style.color = "var(--main-color)";
-			refGuiSwitcher.style.backgroundColor = "var(--main-background-color)";
+			refs.guiSwitcher.style.color = "var(--main-color)";
+			refs.guiSwitcher.style.backgroundColor = "var(--main-background-color)";
 
 			break;
 	}
 }
 
-export { toggleGUI, changeGuiButton, initRefsForChangeGuiButton, exportToToggleGUI };
+export { toggleGUI, changeGuiButton };
