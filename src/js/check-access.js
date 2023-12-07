@@ -21,6 +21,8 @@ async function checkAccess(pass) {
 
 				setDatabaseURL(data.database);
 
+				faverLog(`All data was initialized successfully`);
+
 				openAccess();
 			} else {
 				faverLog(`Access denied`);
