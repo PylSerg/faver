@@ -28,7 +28,7 @@ function faverLog(info, cmd) {
 
 	refs.consoleLog.scrollTop = refs.consoleLog.scrollHeight;
 
-	console.log(`\x1b[01;36m${state.userName}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
+	if (!window.location.host) console.log(`\x1b[01;36m${state.userName}@faver\x1b[0m:~$ \x1b[33m${cmd}\x1b[0m\n\n${info}\n\n`);
 }
 
 export { faverLog };

@@ -1,8 +1,8 @@
-import { state, refs, setState } from "./state.js";
-import { runCommand } from "./run-command.js";
-import { showConsole, hideConsole } from "./console-controller.js";
+import { state, refs, setState } from "../state.js";
+import { runCommand } from "../run-command.js";
+import { showConsole, hideConsole } from "../console-controller.js";
 
-export default function keyShortcutsEventListener() {
+export default function keyShortcutsEventsListeners() {
 	document.addEventListener("keydown", (e) => {
 		if (e.key === ":") {
 			runCommand("og");
